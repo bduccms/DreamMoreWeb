@@ -3,164 +3,286 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Devvoltz Footer</title>
+    <title>DreamMore Footer</title>
     <!-- Bootstrap 5 CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <!-- Font Awesome CDN for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
+        /* ===== Footer Base Styles ===== */
         footer {
             background: linear-gradient(135deg, #1f2937, #111827);
             color: #ffffff;
+            padding: 3rem 0 1rem;
+            position: relative;
+            overflow: hidden;
         }
+        
+        /* ===== Footer Links ===== */
         footer a {
             color: #9ca3af;
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            display: inline-block;
         }
+        
         footer a:hover {
-            color: #0d6efd;
+            color: #ff7800;
+            transform: translateX(5px);
         }
+        
+        /* ===== Footer Columns ===== */
+        .footer-col {
+            margin-bottom: 2rem;
+        }
+        
+        .footer-col h6 {
+            color: #ffffff;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            position: relative;
+            font-size: 1.2rem;
+        }
+        
+        .footer-col h6::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 50px;
+            height: 2px;
+            background: #ff7800;
+        }
+        
+        .footer-col ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        /* ===== Logo Section ===== */
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-logo img {
+            border-radius: 50%;
+            margin-right: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .footer-logo img:hover {
+            transform: rotate(15deg);
+        }
+        
+        .logowrite {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        
+        .footer-about {
+            color: #d1d5db;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* ===== Social Icons ===== */
+        .social-icons {
+            display: flex;
+            justify-content: space-between;
+            max-width: 300px;
+            margin-top: 1.5rem;
+        }
+        
         .social-icons a {
             color: #ff7800;
-            font-size: 2rem;
-            font-weight: 800;
-            margin-right: 10px;
-            transition: color 0.3s ease, transform 0.3s ease;
+            font-size: 1.5rem;
+            margin-right: 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
         }
+        
         .social-icons a:hover {
             color: #ffffff;
-            transform: scale(2.8) rotate(160deg);
-            transition: transform 0.8s ease;
+            background: #ff7800;
+            transform: translateY(-5px) scale(1.1);
         }
-        #QuickLinks{
-            margin-left: 20%;
-           
-        }
-
-        #QuickLinks li:hover{
-            
-            color: #ff7800;
-           
-        }
-        #Services12{
-            padding-top: 10px;
-            font-size: 20px;
-           
-            
-        }
-
-        #Services12 ul:hover{
-            color: #ff7800;
-        }
-        .newsletter input[type="email"] {
-            border-radius: 0;
-            padding: 0.5rem 1rem;
-        }
-        .newsletter button {
-            border-radius: 0;
-            padding: 0.5rem 1rem;
-        }
+        
+        /* ===== Footer Bottom ===== */
         .footer-bottom {
             border-top: 1px solid #374151;
-            padding-top: 1rem;
+            padding-top: 1.5rem;
+            margin-top: 2rem;
             font-size: 0.9rem;
+            color: #9ca3af;
         }
-
-        .fooicon{
-            justify-content: space-between;
-          
+        
+        .footer-bottom a {
+            color: #d1d5db;
+        }
+        
+        .footer-bottom a:hover {
+            color: #ff7800;
+            text-decoration: underline;
+        }
+        
+        .developer-credit {
+            color: #ff7800;
+            font-weight: 600;
+        }
+        
+        /* ===== Responsive Adjustments ===== */
+        @media (max-width: 992px) {
+            .footer-col {
+                margin-bottom: 2.5rem;
+            }
+            
+            .social-icons {
+                max-width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            footer {
+                text-align: center;
+            }
+            
+            .footer-col h6::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .footer-logo {
+                justify-content: center;
+            }
+            
+            .social-icons {
+                justify-content: center;
+                gap: 1rem;
+                margin: 1.5rem auto;
+            }
+            
+            .footer-bottom {
+                text-align: center;
+            }
+            
+            .footer-bottom div {
+                margin-top: 1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .logowrite {
+                font-size: 1.3rem;
+            }
+            
+            .footer-col h6 {
+                font-size: 1.1rem;
+            }
+            
+            .footer-col ul li {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
     <!-- Footer -->
-    <footer class="pt-5 pb-4">
+    <footer>
         <div class="container">
-            <div class="row text-center text-md-start">
+            <div class="row">
                 <!-- Logo & About -->
-                <div class="col-md-3 mb-4">
-                    <h5 class="fw-bold mb-3 d-flex align-items-center justify-content-center justify-content-md-start">
-                       <a class="navbar-brand text-white" href="/">
-      <img src="/Uploads/logodm.jpg" alt="Dream More Logo" width="60" height="60"  style="border-radius: 50%;"/>
-      <span class="logowrite">DreamMore</span>
-    </a>
-                     
-                    </h5>
-                    <p class="text-white fw-5 fs-5">
-                       Write work at write time.
+                <div class="col-lg-3 col-md-6 footer-col">
+                    <div class="footer-logo">
+                        <img src="/Uploads/logodm.jpg" alt="DreamMore Logo" width="60" height="60" />
+                        <span class="logowrite">DreamMore</span>
+                    </div>
+                    <p class="footer-about">
+                        Empowering youth through professional services and skill training in Ethiopia and beyond.
                     </p>
                     
                     <!-- Social Icons -->
-                    <div class="social-icons mt-3 fooicon">
-                        <a href="https://www.facebook.com/share/1BqoepiZRp/"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="https://t.me/DreamMoreCompany-----Telegram"><i class="fab fa-telegram"></i></a>
-                        <a href="https://www.tiktok.com/@dreammorecompany"> <i class="fab fa-tiktok"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                        <a href="https://www.instagram.com/dreammorecompany/"><i class="fab fa-instagram"></i></a>
+                    <div class="social-icons  d-flex" style="margin-left: 100px;">
+                        <a href="https://www.facebook.com/share/1BqoepiZRp/" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://t.me/DreamMoreCompany-----Telegram" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+                        <a href="https://www.tiktok.com/@dreammorecompany" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.instagram.com/dreammorecompany/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
 
                 <!-- Quick Links -->
-                <div class="col-md-3 mb-4" id="QuickLinks">
-                    <h6 class="fw-semibold mb-3">Quick Links</h6>
-                    <ul class="list-unstyled" style="padding-top: 20px; font-size: 20px;">
+                <!-- <div class="col-lg-3 col-md-6 footer-col">
+                    <h6>Quick Links</h6>
+                    <ul>
                         <li><a href="#home">Home</a></li>
-                        <li><a href="#about">Services</a></li>
-                        <li><a href="#services">Courses</a></li>
-                        <li><a href="#projects">Portifolio</a></li>
-                        <li><a href="#projects">About</a></li>
-                        <li><a href="#projects">Team</a></li>
-                        <li><a href="#contact">Testimonials</a></li>
-                        <li><a href="#projects">Contacts</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#courses">Courses</a></li>
+                        <li><a href="#portfolio">Portfolio</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#team">Team</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#contact">Contact</a></li>
                     </ul>
-                </div>
+                </div> -->
 
                 <!-- Services -->
-                <div class="col-md-3 mb-4" id="Services12">
-                    <h6 class="fw-semibold mb-3">Services</h6>
-                    <ul class="list-unstyled">
-                        <li><a href="#">Social Marketing</a></li>
-                        <li><a href="#">Brand Identity</a></li>
+                <div class="col-lg-3 col-md-6 footer-col servicefooter" style="margin-left: 220px;">
+                    <h6>Services</h6>
+                    <ul>
+                        <li><a href="#">Social Media Marketing</a></li>
+                        <li><a href="#">Brand Identity Design</a></li>
                         <li><a href="#">Software Development</a></li>
                         <li><a href="#">Coding Bootcamps</a></li>
+                        <li><a href="#">Digital Marketing</a></li>
+                        <li><a href="#">Career Counseling</a></li>
                     </ul>
                 </div>
 
-                <!-- Newsletter -->
-                <!-- <div class="col-md-3 mb-4">
-                    <h6 class="fw-semibold mb-3">Newsletter</h6>
-                    <p class="text-muted">
-                        Subscribe for updates on our latest courses and opportunities.
-                    </p>
-                    <form class="newsletter d-flex">
-                        <input type="email" class="form-control me-2" placeholder="Your email" />
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </form>
-                </div> -->
+                <!-- Contact Info -->
+                <div class="col-lg-3 col-md-6 footer-col">
+                    <h6>Contact Us</h6>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt me-2"></i>Bahirdar, Ethiopia</li>
+                        <li><i class="fas fa-phone me-2"></i> +251 912 345 678</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@dreammore.com</li>
+                        <li><i class="fas fa-clock me-2"></i> Mon-Fri: 9AM - 6PM</li>
+                    </ul>
+                </div>
             </div>
 
             <!-- Footer Bottom -->
-            <div class="footer-bottom d-flex flex-column flex-md-row justify-content-between align-items-center mt-4 text-center text-md-start">
-                <p class="mb-2 mb-md-0">&copy; 2017 E.C <span class="fw-bold" style="color: #ff7800;">Dreammore company Developed by <a href="https://smegndestewportfolio.vercel.app/" class="text-primary">Smegn Destew</a></span>. All rights are reserved.</p>
-                <div>
-                    <a href="#" class="me-3">Privacy Policy</a>
-                    <a href="#" class="me-3">Terms of Service</a>
-                    <a href="#">Sitemap</a>
+            <div class="footer-bottom">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>&copy; 2017 E.C <span class="developer-credit">DreamMore Company</span>. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <span>Developed by <a href="https://smegndestewportfolio.vercel.app/" class="developer-credit">Smegn Destew</a></span> |
+                        <a href="#" class="ms-2">Privacy Policy</a> |
+                        <a href="#" class="ms-2">Terms of Service</a>
+                    </div>
                 </div>
             </div>
         </div>
     </footer>
 
-
-    <!-- Bootstrap JS (Optional for animations like dropdowns) -->
+    <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-
-    
 </body>
 </html>

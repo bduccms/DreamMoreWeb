@@ -1,374 +1,470 @@
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg">
-  <div class="container-fluid dm-navbar">
-    <a class="navbar-brand text-white" href="#">
-      <img src="/Uploads/logodm.jpg" alt="Dream More Logo" width="60" height="60" />
-      <span class="logowrite">Dream More Company</span>
-    </a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNav"
-      aria-controls="navbarNav"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto listbtn-navbar">
-        <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-        <li class="nav-item"><a class="nav-link" href="#courses">Courses</a></li>
-        <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
-        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
-        <li class="nav-item"><a class="nav-link" href="#testimonials">Testimonials</a></li>
-        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-
-        <% if (user) { %>
-          <li class="nav-item">
-            <button id="logoutBtn" class="btn btn-outline-light btn-sm ms-2">Logout</button>
-          </li>
-        <% } else { %>
-          <li class="nav-item">
-            <button
-              class="btn btn-outline-light btn-sm ms-2"
-              data-bs-toggle="modal"
-              data-bs-target="#signInModal"
-            >
-              Sign In
-            </button>
-          </li>
-        <% } %>
-
-        <% if (user) { %>
-    <li class="nav-item">
-        <a class="nav-link" href="#"> <%= user.first_name %></a>
-    </li>
-    <% if (user.role === 'admin') { %>
-        <li class="nav-item">
-            <a class="nav-link btn btn-sm btn-outline-warning ms-2" href="/admin/dashboard">Admin</a>
-        </li>
-    <% } %>
-<% } else { %>
-    
-<% } %>
-
-      </ul>
-    </div>
-  </div>
-</nav>
-
-<!-- SIGN IN MODAL -->
-<div
-  class="modal fade"
-  id="signInModal"
-  tabindex="-1"
-  aria-labelledby="signInModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="signInModalLabel">Sign In</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <form id="signInForm">
-          <div class="mb-3">
-            <label for="signInEmail" class="form-label">Email</label>
-            <input
-              type="email"
-              class="form-control"
-              id="signInEmail"
-              name="email"
-              required
-            />
-          </div>
-          <div class="mb-3">
-            <label for="signInPassword" class="form-label">Password</label>
-            <input
-              type="password"
-              class="form-control"
-              id="signInPassword"
-              name="password"
-              required
-            />
-          </div>
-          <button type="submit" class="btn btn-primary">Sign In</button>
-          <div class="mt-3 text-center">
-            <small>
-              Don’t have an account?
-              <a
-                href="#"
-                data-bs-dismiss="modal"
-                data-bs-toggle="modal"
-                data-bs-target="#signUpModal"
-                >Sign Up</a
-              >
-            </small>
-          </div>
-          <div
-            id="signInErrorMessage"
-            class="text-danger mt-2"
-            style="display: none"
-          ></div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- SIGN UP MODAL -->
-<div
-  class="modal fade"
-  id="signUpModal"
-  tabindex="-1"
-  aria-labelledby="signUpModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="signUpModalLabel">Sign Up</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <form id="signUpForm" action="/auth/register" method="POST">
-          <div class="mb-3">
-            <label for="firstName" class="form-label">First Name</label>
-            <input
-              type="text"
-              class="form-control"
-              id="firstName"
-              name="firstName"
-              required
-              pattern="[A-Za-z]+"
-              title="First name should contain only letters"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="lastName" class="form-label">Last Name</label>
-            <input
-              type="text"
-              class="form-control"
-              id="lastName"
-              name="lastName"
-              required
-              pattern="[A-Za-z]+"
-              title="Last name should contain only letters"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="phoneNumber" class="form-label">Phone Number</label>
-            <input
-              type="tel"
-              class="form-control"
-              id="phoneNumber"
-              name="phoneNumber"
-              required
-              pattern="[0-9]{10}"
-              title="Phone number should be 10 digits"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input
-              type="email"
-              class="form-control"
-              id="email"
-              name="email"
-              required
-            />
-          </div>
-          <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              name="password"
-              required
-              pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
-              title="Password must be at least 8 characters with letters and numbers"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="role" class="form-label">Role</label>
-            <select
-              class="form-select"
-              id="role"
-              name="role"
-              aria-label="Select role"
-            >
-              <option value="student" selected>Student (default)</option>
-              <option value="worker">Worker</option>
-              <option value="admin">Admin</option>
-            </select>
-          </div>
-          <button type="submit" class="btn btn-success">Sign Up</button>
-          <div
-            id="errorMessage"
-            class="text-danger mt-2"
-            style="display: none"
-          ></div>
-          <div class="mt-3 text-center">
-            <small>
-              Already have an account?
-              <a
-                href="#"
-                data-bs-dismiss="modal"
-                data-bs-toggle="modal"
-                data-bs-target="#signInModal"
-                >Sign In</a
-              >
-            </small>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Success Message and Rocket Animation -->
-<div
-  id="successMessage"
-  class="alert alert-success position-fixed bottom-0 end-0 m-3"
-  style="display: none"
->
-  Welcome! 🎉
-</div>
-<div
-  id="rocketAnimation"
-  class="position-fixed bottom-0 end-0 m-3"
-  style="display: none"
->
-  <div class="rocket">🚀</div>
-</div>
-
-<script>
-  // SIGN IN FORM HANDLER
-  document.getElementById('signInForm').addEventListener('submit', async function (e) {
-    e.preventDefault();
-
-    const errorMessageEl = document.getElementById('signInErrorMessage');
-    errorMessageEl.style.display = 'none';
-
-    const email = this.signInEmail.value.trim();
-    const password = this.signInPassword.value.trim();
-
-    try {
-      const res = await fetch('/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await res.json();
-
-      if (data.success) {
-        // Show success message & rocket animation
-        document.getElementById('successMessage').style.display = 'block';
-        document.getElementById('rocketAnimation').style.display = 'block';
-
-        setTimeout(() => {
-          // Hide modal & messages
-          bootstrap.Modal.getInstance(document.getElementById('signInModal')).hide();
-          document.getElementById('successMessage').style.display = 'none';
-          document.getElementById('rocketAnimation').style.display = 'none';
-
-          // Reload page to update navbar for logged in user
-          window.location.reload();
-        }, 2000);
-      } else {
-        errorMessageEl.textContent = data.message || 'Invalid credentials.';
-        errorMessageEl.style.display = 'block';
-      }
-    } catch (err) {
-      errorMessageEl.textContent = 'Network error. Please try again.';
-      errorMessageEl.style.display = 'block';
-    }
-  });
-
-  // SIGN UP FORM HANDLER
-  document.getElementById('signUpForm').addEventListener('submit', async function (e) {
-    e.preventDefault();
-
-    const errorMessageEl = document.getElementById('errorMessage');
-    errorMessageEl.style.display = 'none';
-
-    // Collect form data
-    const formData = {
-      firstName: this.firstName.value.trim(),
-      lastName: this.lastName.value.trim(),
-      phoneNumber: this.phoneNumber.value.trim(),
-      email: this.email.value.trim(),
-      password: this.password.value,
-      role: this.role.value,
-    };
-
-    try {
-      const res = await fetch('/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await res.json();
-
-      if (data.success) {
-        document.getElementById('successMessage').style.display = 'block';
-        document.getElementById('rocketAnimation').style.display = 'block';
-
-        this.reset();
-
-        setTimeout(() => {
-          bootstrap.Modal.getInstance(document.getElementById('signUpModal')).hide();
-          document.getElementById('successMessage').style.display = 'none';
-          document.getElementById('rocketAnimation').style.display = 'none';
-
-          // Reload page to show logout button
-          window.location.reload();
-        }, 2500);
-      } else {
-        errorMessageEl.textContent = data.message || 'Registration failed.';
-        errorMessageEl.style.display = 'block';
-      }
-    } catch (err) {
-      errorMessageEl.textContent = 'Network error. Please try again.';
-      errorMessageEl.style.display = 'block';
-    }
-  });
-
-  // LOGOUT BUTTON HANDLER
-  document.addEventListener('DOMContentLoaded', () => {
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
-      logoutBtn.addEventListener('click', async () => {
-        try {
-          const res = await fetch('/auth/logout', { method: 'POST' });
-          const data = await res.json();
-          if (data.success) {
-            window.location.reload();
-          } else {
-            alert('Logout failed. Please try again.');
-          }
-        } catch (err) {
-          alert('Network error. Please try again.');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamMore Navigation</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* ===== Navigation Styles ===== */
+        .navbar {
+            background-color: #1a1a1a;
+            padding: 0.2rem 0.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-      });
-    }
-  });
-</script>
+        
+        .dm-navbar {
+            padding: 0;
+        }
+        
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+        }
+        
+        .navbar-brand img {
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            transition: transform 0.3s ease;
+            width: 50px;
+            height: 50px;
+        }
+        
+        .navbar-brand:hover img {
+            transform: rotate(15deg);
+        }
+        
+        .logowrite {
+            font-size: 1rem;
+            color: white;
+        }
+        
+        .navbar-nav {
+            align-items: center;
+        }
+        
+        .nav-link {
+            font-size: 0.9rem;
+            padding: 0.5rem 0.75rem !important;
+            color: #d1d5db !important;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: #ff7800 !important;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: #ff7800;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        .nav-link:hover::after {
+            width: 70%;
+        }
+        
+        .btn-outline-light, .btn-outline-warning {
+            font-size: 0.8rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+        }
+        
+        .btn-outline-light:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Custom Toggle Button */
+        .navbar-toggler {
+            border: none;
+            padding: 0.5rem;
+            position: relative;
+            width: 40px;
+            height: 40px;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+        
+        .navbar-toggler-icon {
+            background: none;
+            position: relative;
+            width: 24px;
+            height: 2px;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-toggler-icon::before,
+        .navbar-toggler-icon::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 2px;
+            background-color: white;
+            left: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-toggler-icon::before {
+            transform: translateY(-6px);
+        }
+        
+        .navbar-toggler-icon::after {
+            transform: translateY(6px);
+        }
+        
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+            background-color: transparent;
+        }
+        
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before {
+            transform: rotate(45deg);
+            background-color: #ff7800;
+        }
+        
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
+            transform: rotate(-45deg);
+            background-color: #ff7800;
+        }
+        
+        /* Smooth Collapse Animation */
+        .navbar-collapse.collapsing {
+            transition: height 0.35s ease;
+            overflow: hidden;
+        }
+        
+        /* ===== Modal Styles ===== */
+        .modal-header {
+            background-color: #1a1a1a;
+            color: white;
+            border-bottom: none;
+        }
+        
+        .modal-title {
+            font-size: 1.25rem;
+        }
+        
+        .btn-close {
+            filter: invert(1);
+        }
+        
+        .form-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .form-control, .form-select {
+            font-size: 0.9rem;
+            padding: 0.5rem 0.75rem;
+        }
+        
+        /* ===== Success Message ===== */
+        #successMessage {
+            font-size: 0.9rem;
+            padding: 0.75rem 1.25rem;
+        }
+        
+        /* ===== Responsive Adjustments ===== */
+        @media (max-width: 992px) {
+            .navbar-collapse {
+                background-color: #1a1a1a;
+                padding: 1rem;
+                margin-top: 0.5rem;
+                border-radius: 0.5rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-item {
+                margin: 0.25rem 0;
+            }
+            
+            .nav-link::after {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar-brand img {
+                width: 40px;
+                height: 40px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .modal-dialog {
+                margin: 0.5rem;
+            }
+            
+            .modal-content {
+                border-radius: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid dm-navbar">
+            <a class="navbar-brand text-white" href="#">
+                <img src="/Uploads/logodm.jpg" alt="Dream More Logo" width="50" height="50">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto listbtn-navbar">
+                    <li class="nav-item"><a class="nav-link" href="#home" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#courses" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Courses</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#portfolio" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Portfolio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#team" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Team</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#testimonials" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Testimonials</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Contact</a></li>
+
+                    <% if (user) { %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show"> <%= user.first_name %></a>
+                        </li>
+                        <% if (user.role === 'admin') { %>
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-sm btn-outline-warning ms-2" href="/admin/dashboard" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Admin</a>
+                            </li>
+                        <% } %>
+                        <li class="nav-item">
+                            <button id="logoutBtn" class="btn btn-outline-light btn-sm ms-2">Logout</button>
+                        </li>
+                    <% } else { %>
+                        <li class="nav-item">
+                            <button class="btn btn-outline-light btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#signInModal">
+                                Sign In
+                            </button>
+                        </li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Rest of your content remains the same -->
+    <!-- Sign In Modal -->
+    <div class="modal fade" id="signInModal" tabindex="-1" aria-labelledby="signInModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signInModalLabel">Sign In</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="signInForm">
+                        <div class="mb-3">
+                            <label for="signInEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="signInEmail" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="signInPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="signInPassword" name="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Sign In</button>
+                        <div class="mt-3 text-center">
+                            <small>
+                                Don't have an account? 
+                                <a href="#" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign Up</a>
+                            </small>
+                        </div>
+                        <div id="signInErrorMessage" class="text-danger mt-2 text-center" style="display: none"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sign Up Modal -->
+    <div class="modal fade" id="signUpModal" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signUpModalLabel">Sign Up</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="signUpForm" action="/auth/register" method="POST">
+                        <div class="mb-3">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="firstName" name="firstName" required
+                                pattern="[A-Za-z]+" title="First name should contain only letters">
+                        </div>
+                        <div class="mb-3">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="lastName" name="lastName" required
+                                pattern="[A-Za-z]+" title="Last name should contain only letters">
+                        </div>
+                        <div class="mb-3">
+                            <label for="phoneNumber" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" required
+                                pattern="[0-9]{10}" title="Phone number should be 10 digits">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required
+                                pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+                                title="Password must be at least 8 characters with letters and numbers">
+                        </div>
+                        <div class="mb-3">
+                            <label for="role" class="form-label">Role</label>
+                            <select class="form-select" id="role" name="role" aria-label="Select role">
+                                <option value="student" selected>Student (default)</option>
+                                <option value="worker">Worker</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Sign Up</button>
+                        <div id="errorMessage" class="text-danger mt-2 text-center" style="display: none"></div>
+                        <div class="mt-3 text-center">
+                            <small>
+                                Already have an account? 
+                                <a href="#" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#signInModal">Sign In</a>
+                            </small>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Message and Rocket Animation -->
+    <div id="successMessage" class="alert alert-success position-fixed bottom-0 end-0 m-3" style="display: none">
+        Welcome! 🎉
+    </div>
+    <div id="rocketAnimation" class="position-fixed bottom-0 end-0 m-3" style="display: none">
+        <div class="rocket">🚀</div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // SIGN IN FORM HANDLER
+        document.getElementById('signInForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const errorMessageEl = document.getElementById('signInErrorMessage');
+            errorMessageEl.style.display = 'none';
+
+            const email = this.signInEmail.value.trim();
+            const password = this.signInPassword.value.trim();
+
+            try {
+                const res = await fetch('/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password }),
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    document.getElementById('successMessage').style.display = 'block';
+                    document.getElementById('rocketAnimation').style.display = 'block';
+
+                    setTimeout(() => {
+                        bootstrap.Modal.getInstance(document.getElementById('signInModal')).hide();
+                        document.getElementById('successMessage').style.display = 'none';
+                        document.getElementById('rocketAnimation').style.display = 'none';
+                        window.location.reload();
+                    }, 2000);
+                } else {
+                    errorMessageEl.textContent = data.message || 'Invalid credentials.';
+                    errorMessageEl.style.display = 'block';
+                }
+            } catch (err) {
+                errorMessageEl.textContent = 'Network error. Please try again.';
+                errorMessageEl.style.display = 'block';
+            }
+        });
+
+        // SIGN UP FORM HANDLER
+        document.getElementById('signUpForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const errorMessageEl = document.getElementById('errorMessage');
+            errorMessageEl.style.display = 'none';
+
+            const formData = {
+                firstName: this.firstName.value.trim(),
+                lastName: this.lastName.value.trim(),
+                phoneNumber: this.phoneNumber.value.trim(),
+                email: this.email.value.trim(),
+                password: this.password.value,
+                role: this.role.value,
+            };
+
+            try {
+                const res = await fetch('/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData),
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    document.getElementById('successMessage').style.display = 'block';
+                    document.getElementById('rocketAnimation').style.display = 'block';
+                    this.reset();
+
+                    setTimeout(() => {
+                        bootstrap.Modal.getInstance(document.getElementById('signUpModal')).hide();
+                        document.getElementById('successMessage').style.display = 'none';
+                        document.getElementById('rocketAnimation').style.display = 'none';
+                        window.location.reload();
+                    }, 2500);
+                } else {
+                    errorMessageEl.textContent = data.message || 'Registration failed.';
+                    errorMessageEl.style.display = 'block';
+                }
+            } catch (err) {
+                errorMessageEl.textContent = 'Network error. Please try again.';
+                errorMessageEl.style.display = 'block';
+            }
+        });
+
+        // LOGOUT BUTTON HANDLER
+        document.addEventListener('DOMContentLoaded', () => {
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', async () => {
+                    try {
+                        const res = await fetch('/auth/logout', { method: 'POST' });
+                        const data = await res.json();
+                        if (data.success) {
+                            window.location.reload();
+                        } else {
+                            alert('Logout failed. Please try again.');
+                        }
+                    } catch (err) {
+                        alert('Network error. Please try again.');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

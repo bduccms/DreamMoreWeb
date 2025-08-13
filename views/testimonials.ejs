@@ -19,7 +19,9 @@
                                 <div class="testimonial-card">
                                     <div class="card-border-top"></div>
                                     <div class="testimonial-img-container">
-                                        <img src="/<%= testimonial.photo %>" class="testimonial-img" alt="Profile photo">
+                                        <!-- Updated image path handling -->
+                                        <% const photoPath = testimonial.photo.startsWith('http') ? testimonial.photo : `/uploads/testimonials/${testimonial.photo}`; %>
+                                        <img src="<%= photoPath %>" class="testimonial-img" alt="<%= testimonial.name %>" onerror="this.onerror=null;this.src='/images/default-profile.jpg';">
                                         <div class="quote-icon">❝</div>
                                     </div>
                                     <div class="card-body">
@@ -27,7 +29,13 @@
                                         <div class="testimonial-footer">
                                             <h5 class="testimonial-name"><%= testimonial.name %></h5>
                                             <div class="testimonial-rating">
-                                                ★★★★★
+                                                <% for (let i = 0; i < 5; i++) { %>
+                                                    <% if (i < testimonial.rating) { %>
+                                                        ★
+                                                    <% } else { %>
+                                                        ☆
+                                                    <% } %>
+                                                <% } %>
                                             </div>
                                         </div>
                                     </div>
@@ -65,6 +73,7 @@
     
     .testimonial-card-wrapper {
         padding: 10px;
+        scroll-snap-align: start;
     }
     
     .card-border-top {
@@ -83,7 +92,6 @@
         height: 180px;
         margin: 20px auto 20px;
         z-index: 1;
-
     }
     
     .testimonial-img {
@@ -166,7 +174,7 @@
     }
     
     .testimonial-nav-btn:hover {
-        background-color: #ff7800;
+        background-color: #e56a00;
     }
     
     .arrow-icon {
@@ -187,6 +195,7 @@
         -webkit-overflow-scrolling: touch;
         padding-bottom: 20px;
         margin-bottom: -20px;
+        gap: 15px;
     }
     
     .testimonial-slider::-webkit-scrollbar {
@@ -199,13 +208,24 @@
             min-width: 80%;
         }
         
+        .testimonial-img-container {
+            width: 120px;
+            height: 120px;
+        }
+        
         .testimonial-nav-btn {
             width: 40px;
             height: 40px;
         }
     }
     
-    @media (min-width: 769px) {
+    @media (min-width: 769px) and (max-width: 992px) {
+        .testimonial-card-wrapper {
+            min-width: 50%;
+        }
+    }
+    
+    @media (min-width: 993px) {
         .testimonial-card-wrapper {
             min-width: 33.33%;
         }
@@ -213,19 +233,34 @@
 </style>
 
 <script>
-    // Basic slider functionality
+    // Enhanced slider functionality
     document.addEventListener('DOMContentLoaded', function() {
         const slider = document.querySelector('.testimonial-slider');
         const prevBtn = document.getElementById('prev-testimonial');
         const nextBtn = document.getElementById('next-testimonial');
         
         if (slider && prevBtn && nextBtn) {
+            const scrollAmount = () => {
+                if (window.innerWidth < 769) return slider.offsetWidth * 0.8;
+                if (window.innerWidth < 993) return slider.offsetWidth * 0.5;
+                return slider.offsetWidth * 0.33;
+            };
+            
             prevBtn.addEventListener('click', () => {
-                slider.scrollBy({ left: -slider.offsetWidth / 3, behavior: 'smooth' });
+                slider.scrollBy({ left: -scrollAmount(), behavior: 'smooth' });
             });
             
             nextBtn.addEventListener('click', () => {
-                slider.scrollBy({ left: slider.offsetWidth / 3, behavior: 'smooth' });
+                slider.scrollBy({ left: scrollAmount(), behavior: 'smooth' });
+            });
+            
+            // Handle keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') {
+                    slider.scrollBy({ left: -scrollAmount(), behavior: 'smooth' });
+                } else if (e.key === 'ArrowRight') {
+                    slider.scrollBy({ left: scrollAmount(), behavior: 'smooth' });
+                }
             });
         }
     });
