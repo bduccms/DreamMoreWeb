@@ -231,22 +231,22 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto listbtn-navbar">
-                    <li class="nav-item"><a class="nav-link" href="#home" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#services" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#courses" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Courses</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#portfolio" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Portfolio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#about" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#team" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Team</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#testimonials" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Testimonials</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#courses">Courses</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#testimonials">Testimonials</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
 
                     <% if (user) { %>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show"> <%= user.first_name %></a>
+                            <a class="nav-link" href="#"> <%= user.first_name %></a>
                         </li>
                         <% if (user.role === 'admin') { %>
                             <li class="nav-item">
-                                <a class="nav-link btn btn-sm btn-outline-warning ms-2" href="/admin/dashboard" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Admin</a>
+                                <a class="nav-link btn btn-sm btn-outline-warning ms-2" href="/admin/dashboard">Admin</a>
                             </li>
                         <% } %>
                         <li class="nav-item">
@@ -264,7 +264,7 @@
         </div>
     </nav>
 
-    <!-- Rest of your content remains the same -->
+    <!-- Rest of your content (modals, scripts, etc.) remains the same -->
     <!-- Sign In Modal -->
     <div class="modal fade" id="signInModal" tabindex="-1" aria-labelledby="signInModalLabel" aria-hidden="true">
         <div class="modal-dialog">
