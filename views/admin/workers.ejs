@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Workers Dashboard</title>
+  <link rel="stylesheet" href="/css/bootstrap.min.css" />
+  <style>
+    /* Reset & base */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f5f7fa;
+  color: #333;
+  margin: 0;
+  padding: 2rem 1rem;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Header */
+h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+/* Alert Messages */
+.alert {
+  padding: 1rem 1.5rem;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  position: relative;
+  animation: fadeIn 0.3s ease forwards;
+}
+.alert-danger {
+  background: #fdecea;
+  color: #b71c1c;
+  border: 1px solid #f5c6cb;
+}
+.alert-success {
+  background: #e6f4ea;
+  color: #2e7d32;
+  border: 1px solid #c3e6cb;
+}
+
+/* Card style */
+.card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgb(0 0 0 / 0.1);
+  padding: 2rem;
+  margin-bottom: 3rem;
+}
+
+/* Card header */
+.card-header {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #4a90e2, #357ABD);
+  border-radius: 8px 8px 0 0;
+  padding: 1rem 2rem;
+  margin: -2rem -2rem 1.5rem -2rem;
+  user-select: none;
+}
+
+/* Form styling */
+form .form-group,
+form > div {
+  margin-bottom: 1.25rem;
+}
+
+input[type="text"],
+textarea,
+select,
+input[type="file"] {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  border-radius: 8px;
+  border: 1.8px solid #ccc;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  outline-offset: 2px;
+  outline-color: transparent;
+  font-family: inherit;
+  resize: vertical;
+}
+
+input[type="text"]:focus,
+textarea:focus,
+select:focus,
+input[type="file"]:focus {
+  border-color: #357ABD;
+  outline-color: #357ABD;
+  box-shadow: 0 0 8px #357ABD66;
+}
+
+label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.35rem;
+  color: #444;
+}
+
+textarea {
+  min-height: 90px;
+}
+
+/* Buttons */
+button,
+a.btn {
+  display: inline-block;
+  background: #357ABD;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+button:hover,
+a.btn:hover {
+  background: #285a8f;
+}
+
+.btn-warning {
+  background: #f0ad4e;
+  color: #fff;
+}
+
+.btn-warning:hover {
+  background: #d49127;
+}
+
+.btn-danger {
+  background: #d9534f;
+  color: #fff;
+}
+
+.btn-danger:hover {
+  background: #b52b27;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  font-size: 1rem;
+}
+
+thead tr {
+  background: #4a90e2;
+  color: white;
+  font-weight: 700;
+}
+
+th,
+td {
+  padding: 12px 15px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+tbody tr {
+  background: white;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.05);
+  border-radius: 10px;
+  transition: transform 0.2s ease;
+}
+
+tbody tr:hover {
+  transform: translateY(-3px);
+}
+
+td a {
+  color: #357ABD;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+td a:hover {
+  text-decoration: underline;
+}
+
+/* Inline form inside table */
+td form {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+td form input[type="text"],
+td form select,
+td form input[type="file"] {
+  font-size: 0.85rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+td form button,
+td form a.btn {
+  padding: 0.3rem 0.8rem;
+  font-size: 0.85rem;
+  border-radius: 6px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  td form {
+    flex-direction: column;
+  }
+  td form input,
+  td form select,
+  td form button,
+  td form a.btn {
+    width: 100%;
+  }
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <h1 class="mb-4 text-center">Workers Dashboard</h1>
+
+    <% if (error) { %>
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <%= error %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <% } %>
+    <% if (success) { %>
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <%= success %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <% } %>
+
+    <!-- Upload Form Card -->
+    <div class="card mb-5 shadow-sm">
+      <div class="card-header">Upload New Material</div>
+      <div class="card-body">
+        <form action="/admin/workers/materials/upload" method="POST" enctype="multipart/form-data" novalidate>
+          
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              name="title"
+              id="title"
+              class="form-control"
+              value="<%= old && old.title ? old.title : '' %>"
+              placeholder="Material Title"
+              required
+            />
+            <label for="title">Material Title</label>
+          </div>
+
+          <div class="form-floating mb-3">
+            <textarea
+              name="description"
+              id="description"
+              class="form-control"
+              placeholder="Material Description"
+              style="height: 100px"
+              required
+            ><%= old && old.description ? old.description : '' %></textarea>
+            <label for="description">Description</label>
+          </div>
+
+          <div class="mb-3">
+            <label for="course_id" class="form-label fw-semibold">Select Course</label>
+            <select name="course_id" id="course_id" class="form-select" required>
+              <option value="" disabled <%= !(old && old.course_id) ? 'selected' : '' %>>-- Select a Course --</option>
+              <% courses.forEach(course => { %>
+                <option
+                  value="<%= course.id %>"
+                  <%= old && old.course_id == course.id ? 'selected' : '' %>
+                ><%= course.title %></option>
+              <% }) %>
+            </select>
+          </div>
+
+          <div class="mb-4">
+            <label for="file" class="form-label fw-semibold">Upload File</label>
+            <input type="file" name="file" id="file" class="form-control" required />
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100">Upload Material</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Materials Table Card -->
+    <div class="card shadow-sm">
+      <div class="card-header">All Materials</div>
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-striped table-hover align-middle mb-0">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Course</th>
+                <th>File</th>
+                <th style="width: 180px;">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if (materials.length === 0) { %>
+                <tr>
+                  <td colspan="4" class="text-center text-muted py-3">
+                    No materials found.
+                  </td>
+                </tr>
+              <% } %>
+
+              <% materials.forEach(material => { %>
+                <tr>
+                  <td><%= material.title %></td>
+                  <td><%= material.course_title %></td>
+                  <td>
+                    <a href="/uploads/materials/<%= material.filename %>" download>
+                      <i class="bi bi-download me-1"></i> <%= material.filename %>
+                    </a>
+                  </td>
+                  <td>
+                    <!-- Edit Form Inline -->
+                    <form
+                      action="/admin/workers/materials/edit/<%= material.id %>"
+                      method="POST"
+                      enctype="multipart/form-data"
+                      class="d-flex align-items-center gap-2"
+                      style="flex-wrap: wrap;"
+                    >
+                      <input
+                        type="text"
+                        name="title"
+                        value="<%= material.title %>"
+                        class="form-control form-control-sm flex-grow-1"
+                        required
+                        placeholder="Title"
+                      />
+                      <select
+                        name="course_id"
+                        class="form-select form-select-sm flex-grow-1"
+                        required
+                      >
+                        <% courses.forEach(course => { %>
+                          <option
+                            value="<%= course.id %>"
+                            <%= course.id === material.course_id ? 'selected' : '' %>
+                          ><%= course.title %></option>
+                        <% }) %>
+                      </select>
+                      <input type="file" name="file" class="form-control form-control-sm flex-grow-1" />
+                      <button type="submit" class="btn btn-warning btn-sm">Edit</button>
+                      <a href="/admin/workers/materials/delete/<%= material.id %>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this material?')">Delete</a>
+                    </form>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS bundle (includes Popper) -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"
+  ></script>
+</body>
+</html>

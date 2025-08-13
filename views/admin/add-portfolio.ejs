@@ -1,0 +1,119 @@
+<div class="container mt-5">
+  <div class="card shadow-lg mx-auto" style="max-width: 700px;">
+    <div class="card-header bg-primary text-white text-center">
+      <h2>Add New Portfolio</h2>
+    </div>
+    <div class="card-body">
+      <form
+        action="/admin/portfolio/add"
+        method="POST"
+        enctype="multipart/form-data"
+        class="needs-validation"
+        novalidate
+      >
+        <!-- Title -->
+        <div class="mb-3">
+          <label for="title" class="form-label fw-bold">Title</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            class="form-control"
+            placeholder="Enter portfolio title"
+            required
+          />
+          <div class="invalid-feedback">Please enter a title.</div>
+        </div>
+
+        <!-- Description -->
+        <div class="mb-3">
+          <label for="description" class="form-label fw-bold">Description</label>
+          <textarea
+            id="description"
+            name="description"
+            class="form-control"
+            rows="4"
+            placeholder="Enter portfolio description"
+            required
+          ></textarea>
+          <div class="invalid-feedback">Please provide a description.</div>
+        </div>
+
+        <!-- Category -->
+        <div class="mb-3">
+          <label for="category" class="form-label fw-bold">Category</label>
+          <select
+            id="category"
+            name="category"
+            class="form-select"
+            required
+          >
+            <option value="">-- Select Category --</option>
+            <option value="Video Production">Video Production</option>
+            <option value="Design Production">Design Production</option>
+            <option value="Software Development">Software Development</option>
+          </select>
+          <div class="invalid-feedback">Please select a category.</div>
+        </div>
+
+        <!-- Drive URL -->
+        <div class="mb-3">
+          <label for="drive_url" class="form-label fw-bold">Drive URL</label>
+          <input
+            type="url"
+            id="drive_url"
+            name="drive_url"
+            class="form-control"
+            placeholder="https://drive.google.com/..."
+          />
+        </div>
+
+        <!-- GitHub URL -->
+        <div class="mb-3">
+          <label for="github_url" class="form-label fw-bold">GitHub URL</label>
+          <input
+            type="url"
+            id="github_url"
+            name="github_url"
+            class="form-control"
+            placeholder="https://github.com/..."
+          />
+        </div>
+
+        <!-- Image -->
+        <div class="mb-3">
+          <label for="image" class="form-label fw-bold">Portfolio Image</label>
+          <input
+            type="file"
+            id="image"
+            name="image"
+            class="form-control"
+            accept="image/*"
+            required
+          />
+          <div class="invalid-feedback">Please upload an image.</div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary w-100">Add Portfolio</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Bootstrap validation
+  (() => {
+    "use strict";
+    const forms = document.querySelectorAll(".needs-validation");
+    Array.from(forms).forEach((form) => {
+      form.addEventListener("submit", (event) => {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add("was-validated");
+      }, false);
+    });
+  })();
+</script>

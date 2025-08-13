@@ -1,0 +1,94 @@
+<!-- Portfolio Section -->
+ <!-- Font Awesome CDN -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  rel="stylesheet"
+/>
+
+<div class="evangadi">
+    <img src="../uploads/evan.jpg" alt="Evangadi Banner" class="img-fluid my-3" width="100%">
+     <img src="../uploads/gradient  light.jpg" alt="Gradient Light" class="img-fluid" width="100%" > 
+</div>
+
+<section id="portfolio" class="py-5" style="background-color: #ffffff;">
+    <div class="container">
+        <h2 class="section-title text-center mb-5" style="color: #010318;">Our Portfolio</h2>
+
+        <!-- Portfolio Categories -->
+        <% const categories = [
+            {
+                name: "Video Production",
+                items: [
+                    { title: "Promo Video", desc: "Company promotional video production.", img: "/uploads/home.jpg" },
+                    { title: "Documentary", desc: "High-quality documentary filming/editing.", img: "/uploads/home.jpg" },
+                    { title: "Event Coverage", desc: "Weddings, conferences, and music shows.", img: "/uploads/home.jpg" },
+                    { title: "Drone Footage", desc: "Aerial shots for real estate and tourism.", img: "/uploads/home.jpg" }
+                ]
+            },
+            {
+                name: "Design Production",
+                items: [
+                    { title: "Brand Identity", desc: "Logos, color schemes, typography.", img: "/uploads/home.jpg" },
+                    { title: "Flyers & Brochures", desc: "Professional marketing materials.", img: "/uploads/home.jpg" },
+                    { title: "UI/UX Design", desc: "Mobile and web interfaces with Figma.", img: "/uploads/home.jpg" },
+                    { title: "Packaging Design", desc: "Eye-catching packages for products.", img: "/uploads/home.jpg" }
+                ]
+            },
+            {
+                name: "Software Development",
+                items: [
+                    { title: "Website Development", desc: "Modern websites with HTML, CSS, JS, React.", img: "/uploads/home.jpg" },
+                    { title: "Mobile Apps", desc: "Android/iOS apps using Flutter & Firebase.", img: "/uploads/home.jpg" },
+                    { title: "E-commerce Platform", desc: "Online stores with cart & payment systems.", img: "/uploads/home.jpg" },
+                    { title: "Management Systems", desc: "School, hotel, and inventory systems.", img: "/uploads/home.jpg" }
+                ]
+            }
+        ]; %>
+
+        <% categories.forEach(category => { %>
+            <div class="mb-5">
+                <h3 class="collection mb-4 text-center fw-bold" style="color: #ff7800;"><%= category.name %></h3>
+                <div class="row g-3">
+                    <% category.items.forEach(item => { %>
+                        <div class="col-6 col-sm-4 col-md-3">
+                            <div class="card h-100 shadow-sm border-0 portfolio-card" style="border-radius: 10px;">
+                                <img src="<%= item.img %>" class="card-img-top" alt="<%= item.title %>" style="border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                                <div class="card-body d-flex flex-column justify-content-between" style="background-color: #f8f9fa;">
+                                    <h5 class="card-title" style="color: #010318;"><%= item.title %></h5>
+                                    <p class="card-text text-muted small"><%= item.desc %></p>
+                                </div>
+                                <!-- Drive & GitHub icons at the bottom -->
+                                <div class="card-footer d-flex justify-content-center gap-3 footer-gradient">
+                                    <a href="#" class="text-white" title="Google Drive">
+                                        <i class="fab fa-google-drive fa-lg"></i>
+                                    </a>
+                                    <a href="#" class="text-black" title="GitHub">
+                                        <i class="fab fa-github fa-lg"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+</section>
+
+<div class="evangadi">
+    <img src="../uploads/evan.jpg" alt="Evangadi Footer Banner" class="img-fluid my-3" width="100%">
+</div>
+
+<style>
+    .footer-gradient {
+     background: linear-gradient(45deg, #010318, #ff7800);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    transition: background 0.5s ease;
+}
+
+.footer-gradient:hover {
+    background: linear-gradient(45deg, #010318, #ff7800);
+}
+
+</style>

@@ -1,0 +1,23 @@
+<%- include('../partials/header') %>
+<div class="container mt-5">
+    <h2>Apply for <%= course.title %></h2>
+    <p><%= course.description %></p>
+    <p>Benefits: Learn valuable skills with expert instructors.</p>
+    <form action="/courses/submit-payment" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="user_id" value="<%= user.id %>">
+        <input type="hidden" name="course_id" value="<%= course.id %>">
+        <div class="mb-3">
+            <label for="payment_method" class="form-label">Payment Method</label>
+            <select class="form-control" id="payment_method" name="payment_method" required>
+                <option value="telebirr">Telebirr (Send 6000 birr to 0962935163)</option>
+                <option value="cbe_birr">CBE Birr</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="payment_screenshot" class="form-label">Upload Payment Screenshot</label>
+            <input type="file" class="form-control" id="payment_screenshot" name="payment_screenshot" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Payment</button>
+    </form>
+</div>
+<%- include('../partials/footer') %>

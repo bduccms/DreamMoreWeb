@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course Applications</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .loading-spinner {
+      display: none;
+    }
+    .error-message {
+      display: none;
+    }
+    .table-container {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-4">
+    <h1 class="mb-4">Course Applications</h1>
+    
+    <div class="alert alert-danger error-message" role="alert">
+      <i class="fas fa-exclamation-circle me-2"></i>
+      <span class="error-text"></span>
+    </div>
+    
+    <div class="d-flex justify-content-center loading-spinner">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    
+    <div class="table-container">
+      <div class="table-responsive">
+        <table class="table table-striped table-hover table-bordered">
+          <thead class="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Course</th>
+              <th>Status</th>
+              <th>Applied Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="applicationsTableBody">
+            <% if (applications && applications.length > 0) { %>
+              <% applications.forEach(application => { %>
+                <tr>
+                  <td><%= application.id %></td>
+                  <td><%= application.name || 'N/A' %></td>
+                  <td><%= application.email || 'N/A' %></td>
+                  <td><%= application.course_name || 'N/A' %></td>
+                  <td>
+                    <span class="badge <%= getStatusBadgeClass(application.status) %>">
+                      <%= application.status || 'N/A' %>
+                    </span>
+                  </td>
+                  <td><%= formatDate(application.applied_date) %></td>
+                  <td>
+                    <button class="btn btn-sm btn-outline-primary view-btn" data-id="<%= application.id %>">
+                      <i class="fas fa-eye"></i> View
+                    </button>
+                  </td>
+                </tr>
+              <% }); %>
+            <% } else { %>
+              <tr>
+                <td colspan="7" class="text-center">No course applications found</td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Embedded JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const tableBody = document.getElementById('applicationsTableBody');
+      const loadingSpinner = document.querySelector('.loading-spinner');
+      const errorMessage = document.querySelector('.error-message');
+      const errorText = document.querySelector('.error-text');
+      
+      // Add event listeners to view buttons
+      document.querySelectorAll('.view-btn').forEach(button => {
+        button.addEventListener('click', function() {
+          const applicationId = this.getAttribute('data-id');
+          viewApplicationDetails(applicationId);
+        });
+      });
+      
+      function viewApplicationDetails(applicationId) {
+        showLoading();
+        
+        fetch(`/api/course-applications/${applicationId}`)
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then(application => {
+            hideLoading();
+            alert(`Application Details:\n\nID: ${application.id}\nName: ${application.name}\nEmail: ${application.email}\nCourse: ${application.course_name}\nStatus: ${application.status}`);
+          })
+          .catch(error => {
+            hideLoading();
+            showError(`Failed to load application details: ${error.message}`);
+            console.error('Error:', error);
+          });
+      }
+      
+      function showLoading() {
+        loadingSpinner.style.display = 'flex';
+      }
+      
+      function hideLoading() {
+        loadingSpinner.style.display = 'none';
+      }
+      
+      function showError(message) {
+        errorText.textContent = message;
+        errorMessage.style.display = 'block';
+      }
+      
+      function hideError() {
+        errorMessage.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
+
+<%!
+  // Helper functions for EJS
+  function getStatusBadgeClass(status) {
+    if (!status) return 'bg-secondary';
+    
+    switch (status.toLowerCase()) {
+      case 'approved':
+        return 'bg-success';
+      case 'pending':
+        return 'bg-warning text-dark';
+      case 'rejected':
+        return 'bg-danger';
+      default:
+        return 'bg-secondary';
+    }
+  }
+
+  function formatDate(dateString) {
+    if (!dateString) return 'N/A';
+    
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  }
+%>

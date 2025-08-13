@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Testimonial Form</title>
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Inter', sans-serif;
+    }
+    .testimonial-card {
+      max-width: 600px;
+      border: none;
+      border-radius: 15px;
+      background-color: #ffffff;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(1, 3, 24, 0.1);
+    }
+    .card-header {
+      background-color: #ff7800;
+      color: #ffffff;
+      border-radius: 15px 15px 0 0;
+      padding: 1.5rem;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1.75rem;
+    }
+    .card-body {
+      padding: 2rem;
+    }
+    .form-label {
+      color: #010318;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .form-control, .form-control-lg {
+      border-radius: 10px;
+      border: 1px solid #ced4da;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .form-control:focus {
+      border-color: #ff7800;
+      box-shadow: 0 0 0 0.25rem rgba(255, 120, 0, 0.25);
+    }
+    .btn-submit {
+      background-color: #ff7800;
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      padding: 0.75rem;
+      font-weight: 600;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .btn-submit:hover {
+      background-color: #e56a00;
+      transform: scale(1.02);
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      color: #ff7800;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    .back-link:hover {
+      color: #e56a00;
+    }
+    .back-link svg {
+      margin-right: 0.5rem;
+    }
+    .img-thumbnail {
+      border-radius: 10px;
+      max-width: 150px;
+      margin-bottom: 1rem;
+    }
+    .invalid-feedback {
+      color: #dc3545;
+      font-size: 0.875rem;
+    }
+    @media (max-width: 576px) {
+      .testimonial-card {
+        margin: 1rem;
+      }
+      .card-title {
+        font-size: 1.5rem;
+      }
+      .card-body {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <a href="/admin/testimonials" class="back-link mb-4">
+      <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+      </svg>
+      Back
+    </a>
+    <div class="card testimonial-card shadow-lg mx-auto">
+      <div class="card-header text-center">
+        <h2 class="card-title mb-0">
+          <%= testimonial ? "Edit Testimonial" : "Add New Testimonial" %>
+        </h2>
+      </div>
+      <div class="card-body">
+        <form
+          action="<%= testimonial ? '/admin/edit-testimonial/' + testimonial.id : '/admin/add-testimonial' %>"
+          method="POST"
+          enctype="multipart/form-data"
+          class="needs-validation"
+          novalidate
+        >
+          <div class="mb-4">
+            <label for="name" class="form-label">Name</label>
+            <input
+              type="text"
+              class="form-control form-control-lg"
+              id="name"
+              name="name"
+              placeholder="Enter full name"
+              value="<%= testimonial ? testimonial.name : '' %>"
+              required
+            />
+            <div class="invalid-feedback">Please enter a name.</div>
+          </div>
+
+          <div class="mb-4">
+            <label for="description" class="form-label">Description</label>
+            <textarea
+              class="form-control form-control-lg"
+              id="description"
+              name="description"
+              rows="4"
+              placeholder="Write testimonial description"
+              required
+            ><%= testimonial ? testimonial.description : '' %></textarea>
+            <div class="invalid-feedback">Please provide a description.</div>
+          </div>
+
+          <div class="mb-4">
+            <label for="photo" class="form-label">Photo</label>
+            <% if (testimonial && testimonial.photo) { %>
+              <div class="mb-2">
+                <img
+                  src="<%= testimonial.photo %>"
+                  alt="Current Photo"
+                  class="img-thumbnail"
+                />
+              </div>
+            <% } %>
+            <input
+              type="file"
+              class="form-control form-control-lg"
+              id="photo"
+              name="photo"
+              accept="image/*"
+              <%= testimonial ? '' : 'required' %>
+            />
+            <div class="invalid-feedback">
+              Please upload a photo <%= testimonial ? '(optional for edit)' : '' %>.
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-submit btn-lg w-100">
+            <%= testimonial ? "Update Testimonial" : "Add Testimonial" %>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Bootstrap form validation
+    (function () {
+      'use strict';
+      const forms = document.querySelectorAll('.needs-validation');
+      Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    })();
+  </script>
+</body>
+</html>

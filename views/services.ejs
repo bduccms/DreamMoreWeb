@@ -1,0 +1,129 @@
+<!-- Services Section -->
+ <style>
+    .btnorder{
+        
+       margin-bottom: 30px;
+       padding-top: 20px;
+       width: 500px;
+    }
+ </style>
+<section id="services" >
+    <div>
+     
+    
+
+        <div >
+            <img src="../uploads/artboard 22.JPG" alt="Our Services" width="100%">
+            
+                <button class="btn btn-primary btn-lg btnorder" onclick="openServiceTypeModal()">Order Now</button>
+           
+        </div>
+    </div>
+</section>
+
+<br><br><br><br>
+
+<!-- Modal 1: Choose Skill or Project -->
+<div class="modal fade" id="serviceTypeModal" tabindex="-1" aria-labelledby="serviceTypeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="serviceTypeModalLabel">Choose Order Type</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <p>Please select whether you want to order a Skill training or a Project.</p>
+                <button class="btn btn-success m-2" onclick="goToCourse()">Skill</button>
+                <% if (user) { %>
+                    <button class="btn btn-primary m-2" onclick="openProjectOrderModal()">Project</button>
+                <% } else { %>
+                    <button class="btn btn-primary m-2" onclick="askLogin()">Project</button>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 2: Project Order Form -->
+<% if (user) { %>
+<div class="modal fade" id="projectOrderModal" tabindex="-1" aria-labelledby="projectOrderModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="projectOrderModalLabel">Place Your Project Order</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/orders/place" method="POST" class="p-3">
+                    <input type="hidden" name="user_id" value="<%= user.id %>">
+                    <input type="hidden" name="user_name" value="<%= user.first_name + ' ' + user.last_name %>">
+                    <input type="hidden" name="user_email" value="<%= user.email %>">
+                    <input type="hidden" name="user_phone" value="<%= user.phone %>">
+
+                    <div class="mb-3">
+                        <label for="service_detail" class="form-label">Select Project</label>
+                        <select class="form-select" id="service_detail" name="service_detail" required>
+                            <option value="">-- Select a Project --</option>
+                            <option value="website">Website</option>
+                            <option value="video_editing">Video Editing</option>
+                            <option value="logo">Logo</option>
+                            <option value="poster">Poster</option>
+                            <option value="app">App</option>
+                        </select>
+                    </div>
+
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-success">Submit Order</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<% } %>
+
+<!-- Modal: Ask Login -->
+<div class="modal fade" id="loginRequiredModal" tabindex="-1" aria-labelledby="loginRequiredModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginRequiredModalLabel">Login Required</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>You need to login to place a project order.</p>
+                <a href="/login" class="btn btn-primary">Login Now</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openServiceTypeModal() {
+        const modal = document.getElementById('serviceTypeModal');
+        if (modal) {
+            const bootstrapModal = new bootstrap.Modal(modal);
+            bootstrapModal.show();
+        }
+    }
+
+    function goToCourse() {
+        const modal = bootstrap.Modal.getInstance(document.getElementById('serviceTypeModal'));
+        if (modal) modal.hide();
+        window.location.assign("#course");
+    }
+
+    function openProjectOrderModal() {
+        const modal1 = bootstrap.Modal.getInstance(document.getElementById('serviceTypeModal'));
+        if (modal1) modal1.hide();
+        const modal2 = new bootstrap.Modal(document.getElementById('projectOrderModal'));
+        modal2.show();
+    }
+
+    function askLogin() {
+        const modal1 = bootstrap.Modal.getInstance(document.getElementById('serviceTypeModal'));
+        if (modal1) modal1.hide();
+        const modal3 = new bootstrap.Modal(document.getElementById('loginRequiredModal'));
+        modal3.show();
+    }
+</script>

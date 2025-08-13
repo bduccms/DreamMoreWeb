@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - Applications</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Course Applications</h1>
+        <table border="1" cellpadding="8" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Course</th>
+                    <th>Screenshot</th>
+                    <th>Status</th>
+                    <th>Submitted At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% applications.forEach(app => { %>
+                    <tr>
+                        <td><%= app.user_name || 'Unknown User' %></td>
+                        <td><%= app.course_title %></td>
+                        <td><img src="/uploads/<%= app.screenshot %>" width="100" alt="Screenshot"></td>
+                        <td><%= app.status %></td>
+                        <td><%= app.created_at.toLocaleString() %></td>
+                        <td>
+                            <form action="/admin/applications/status/<%= app.id %>" method="POST" style="display:inline;">
+                                <input type="hidden" name="status" value="approved">
+                                <button type="submit">Approve</button>
+                            </form>
+                            <form action="/admin/applications/status/<%= app.id %>" method="POST" style="display:inline;">
+                                <input type="hidden" name="status" value="rejected">
+                                <button type="submit">Reject</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
