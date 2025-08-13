@@ -10,7 +10,7 @@
                     <% portfolios.filter(p => p.category === category).forEach(portfolio => { %>
                         <div class="col-md-4 mb-4">
                             <div class="card h-100 shadow-sm">
-                                <img src="/Uploads/<%= portfolio.image %>" class="card-img-top" alt="<%= portfolio.title %>" style="height: 200px; object-fit: cover;">
+                                <img src="/<%= portfolio.image %>" class="card-img-top" alt="<%= portfolio.title %>" style="height: 200px; object-fit: cover;">
                                 <div class="card-body">
                                     <h5 class="card-title text-white"><%= portfolio.title %></h5>
                                     <p class="card-text"><%= portfolio.description %></p>
