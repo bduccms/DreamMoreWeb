@@ -112,7 +112,7 @@
         #home {
             background: linear-gradient(135deg, #1a1a1a 0%, #2c3e50 100%);
             color: white;
-            background-image: url('../uploads/home3.png');
+            background-image: url('/Uploads/home3.png');
             width: 100%;
             
         }
@@ -132,10 +132,10 @@
             
         }
         .ordernow{
-            background-image: url('../uploads/background.jpg');
+            background-image: url('/Uploads/background.jpg');
         }
         #courses {
-            background-image: url('../uploads/background.jpg');
+            background-image: url('/Uploads/background.jpg');
         }
         .card{
             box-shadow: 8px #ffffff;
@@ -151,7 +151,7 @@
             background: linear-gradient(150deg, #010318, #ff7800);
         }
         #portfolio {
-            background-image: url('../uploads/portfolio.jpg');
+            background-image: url('/Uploads/portfolio.jpg');
             color: white;
         }
         .evangadi{
