@@ -2,7 +2,7 @@
         body {
             font-family: 'Arial', sans-serif;
             scroll-behavior: smooth;
-             background-image: url('../uploads/background.jpg'); 
+             background-image: url('/Uploads/background.jpg'); 
         }
 
       
