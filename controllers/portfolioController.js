@@ -1,3 +1,4 @@
+const path = require('path');
 const db = require('../config/db');
 
 // ✅ Display all portfolios on homepage
@@ -5,8 +6,17 @@ exports.getPortfolios = async (req, res) => {
   try {
     const [portfolios] = await db.query("SELECT * FROM portfolios ORDER BY created_at DESC");
     const [courses] = await db.query("SELECT * FROM courseslist");
+
+    // Ensure image paths have correct prefix for production
+    const updatedPortfolios = portfolios.map(p => {
+      if (p.image && !p.image.startsWith('/uploads/')) {
+        p.image = `/uploads/${p.image}`;
+      }
+      return p;
+    });
+
     res.render("home", { 
-      portfolios: portfolios || [], 
+      portfolios: updatedPortfolios || [], 
       courses: courses || [], 
       testimonials: [], 
       user: req.session.user || null 
@@ -40,6 +50,8 @@ exports.showAddForm = (req, res) => {
 // ✅ Handle Add Portfolio POST
 exports.addPortfolio = async (req, res) => {
   const { title, description, category, drive_url, github_url } = req.body;
+
+  // Always store image path relative to /uploads
   const image = req.file ? `/uploads/${req.file.filename}` : null;
 
   try {
@@ -78,6 +90,8 @@ exports.showEditForm = async (req, res) => {
 exports.editPortfolio = async (req, res) => {
   const id = req.params.id;
   const { title, description, category, drive_url, github_url, currentImage } = req.body;
+
+  // Use uploaded file if provided, otherwise keep current image
   const image = req.file ? `/uploads/${req.file.filename}` : currentImage;
 
   try {
