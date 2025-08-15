@@ -36,7 +36,7 @@
 
 <% } else { %>
   <!-- 📝 Show Apply button for new users -->
-  <button class="btn btn-primary w-100 apply-btn" data-bs-toggle="modal" data-bs-target="<%= user ? '#applyModal_' + course.title.replace(/\s+/g, '_') : '#signInModal' %>" data-course-title="<%= course.title %>">Apply Now</button>
+  <button  id="applybtn" class="btn  w-25 apply-btn" data-bs-toggle="modal" data-bs-target="<%= user ? '#applyModal_' + course.title.replace(/\s+/g, '_') : '#signInModal' %>" data-course-title="<%= course.title %>"   >Apply Now</button>
 <% } %>
 
                   </div>

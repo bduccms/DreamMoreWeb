@@ -11,16 +11,29 @@
     <style>
         /* ===== Footer Base Styles ===== */
         footer {
-            background: linear-gradient(135deg, #1f2937, #111827);
+            background: linear-gradient(135deg, #111827, #1f2937);
             color: #ffffff;
-            padding: 3rem 0 1rem;
+            padding: 4rem 0 1rem;
             position: relative;
             overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        /* Gradient overlay for modern look */
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(255, 120, 0, 0.1) 0%, transparent 50%);
+            pointer-events: none;
         }
         
         /* ===== Footer Links ===== */
         footer a {
-            color: #9ca3af;
+            color: #d1d5db;
             text-decoration: none;
             transition: all 0.3s ease;
             display: inline-block;
@@ -34,14 +47,17 @@
         /* ===== Footer Columns ===== */
         .footer-col {
             margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
         }
         
         .footer-col h6 {
             color: #ffffff;
-            font-weight: 600;
+            font-weight: 700;
             margin-bottom: 1.5rem;
             position: relative;
             font-size: 1.2rem;
+            letter-spacing: 0.5px;
         }
         
         .footer-col h6::after {
@@ -49,9 +65,10 @@
             position: absolute;
             left: 0;
             bottom: -8px;
-            width: 50px;
-            height: 2px;
+            width: 40px;
+            height: 3px;
             background: #ff7800;
+            border-radius: 3px;
         }
         
         .footer-col ul {
@@ -61,73 +78,119 @@
         
         .footer-col ul li {
             margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .footer-col ul li::before {
+            content: '•';
+            color: #ff7800;
+            position: absolute;
+            left: 0;
         }
         
         /* ===== Logo Section ===== */
         .footer-logo {
             display: flex;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
         
         .footer-logo img {
             border-radius: 50%;
             margin-right: 1rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 120, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid rgba(255, 120, 0, 0.3);
         }
         
         .footer-logo img:hover {
-            transform: rotate(15deg);
+            transform: rotate(15deg) scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 120, 0, 0.5);
         }
         
         .logowrite {
-            font-size: 1.5rem;
-            font-weight: 700;
+            font-size: 1.6rem;
+            font-weight: 800;
             color: #ffffff;
+            background: linear-gradient(to right, #ffffff, #ff7800);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 0.5px;
         }
         
         .footer-about {
             color: #d1d5db;
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            margin-bottom: 1.8rem;
+            font-size: 0.95rem;
         }
         
         /* ===== Social Icons ===== */
         .social-icons {
             display: flex;
-            justify-content: space-between;
-            max-width: 300px;
-            margin-top: 1.5rem;
+            margin-right: 12px;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 1.0rem;
+            background-color: #ff7800;
         }
         
         .social-icons a {
-            color: #ff7800;
-            font-size: 1.5rem;
-            margin-right: 0;
+            background-color: #111827;
+            color: #ffffff;
+            font-size: 1.1rem;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-icons a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
         }
         
         .social-icons a:hover {
             color: #ffffff;
-            background: #ff7800;
+            background: #010318;
             transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 5px 15px rgba(255, 120, 0, 0.4);
+        }
+        
+        .social-icons a:hover::before {
+            left: 100%;
+        }
+        
+        /* ===== Contact Icons ===== */
+        .contact-info li i {
+            color: #ff7800;
+            width: 20px;
+            text-align: center;
         }
         
         /* ===== Footer Bottom ===== */
         .footer-bottom {
-            border-top: 1px solid #374151;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding-top: 1.5rem;
-            margin-top: 2rem;
+            margin-top: 3rem;
             font-size: 0.9rem;
             color: #9ca3af;
+            position: relative;
+            z-index: 1;
         }
         
         .footer-bottom a {
@@ -136,22 +199,73 @@
         
         .footer-bottom a:hover {
             color: #ff7800;
-            text-decoration: underline;
+            text-decoration: none;
         }
         
         .developer-credit {
             color: #ff7800;
             font-weight: 600;
+            position: relative;
+        }
+        
+        .developer-credit::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ff7800;
+            transition: width 0.3s ease;
+        }
+        
+        .developer-credit:hover::after {
+            width: 100%;
+        }
+        
+        /* ===== Newsletter ===== */
+        .newsletter-form {
+            display: flex;
+            margin-top: 1.5rem;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 30px 0 0 30px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            outline: none;
+        }
+        
+        .newsletter-form button {
+            background: #ff7800;
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .newsletter-form button:hover {
+            background: #e56a00;
+        }
+        
+        /* ===== Payment Methods ===== */
+        .payment-methods img {
+            transition: transform 0.3s ease;
+        }
+        
+        .payment-methods img:hover {
+            transform: translateY(-3px);
         }
         
         /* ===== Responsive Adjustments ===== */
         @media (max-width: 992px) {
             .footer-col {
                 margin-bottom: 2.5rem;
-            }
-            
-            .social-icons {
-                max-width: 100%;
             }
         }
         
@@ -171,22 +285,33 @@
             
             .social-icons {
                 justify-content: center;
-                gap: 1rem;
-                margin: 1.5rem auto;
             }
             
             .footer-bottom {
                 text-align: center;
             }
             
-            .footer-bottom div {
+            .footer-bottom .text-md-end {
+                text-align: center !important;
                 margin-top: 1rem;
+            }
+            
+            .newsletter-form {
+                justify-content: center;
+            }
+            
+            .footer-col ul li::before {
+                display: none;
+            }
+            
+            .footer-col ul li {
+                padding-left: 0;
             }
         }
         
         @media (max-width: 576px) {
             .logowrite {
-                font-size: 1.3rem;
+                font-size: 1.4rem;
             }
             
             .footer-col h6 {
@@ -196,53 +321,99 @@
             .footer-col ul li {
                 font-size: 0.9rem;
             }
+            
+            .newsletter-form {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .newsletter-form input,
+            .newsletter-form button {
+                border-radius: 30px !important;
+                width: 100%;
+            }
+        }
+        
+        /* Animation */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .floating-element {
+            position: absolute;
+            opacity: 0.1;
+            z-index: 0;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .floating-element:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            font-size: 2rem;
+            animation-delay: 0s;
+        }
+        
+        .floating-element:nth-child(2) {
+            top: 60%;
+            left: 80%;
+            font-size: 1.5rem;
+            animation-delay: 1s;
+        }
+        
+        .floating-element:nth-child(3) {
+            top: 30%;
+            left: 70%;
+            font-size: 3rem;
+            animation-delay: 2s;
+        }
+        
+        .floating-element:nth-child(4) {
+            top: 80%;
+            left: 20%;
+            font-size: 2.5rem;
+            animation-delay: 3s;
         }
     </style>
 </head>
 <body>
     <!-- Footer -->
     <footer>
+        <!-- Floating decorative elements -->
+        <div class="floating-element"><i class="fas fa-star"></i></div>
+        <div class="floating-element"><i class="fas fa-circle"></i></div>
+        <div class="floating-element"><i class="fas fa-heart"></i></div>
+        <div class="floating-element"><i class="fas fa-square"></i></div>
+        
         <div class="container">
             <div class="row">
-                <!-- Logo & About -->
-                <div class="col-lg-3 col-md-6 footer-col">
+                <!-- Logo & About - First Column -->
+                <div class="col-lg-4 col-md-6 footer-col">
                     <div class="footer-logo">
                         <img src="/Uploads/logodm.jpg" alt="DreamMore Logo" width="60" height="60" />
                         <span class="logowrite">DreamMore</span>
                     </div>
                     <p class="footer-about">
-                        Empowering youth through professional services and skill training in Ethiopia and beyond.
+                        Empowering youth through professional services and skill training in Ethiopia and beyond. 
+                        We bridge the gap between talent and opportunity through innovative solutions.
                     </p>
                     
-                    <!-- Social Icons -->
-                    <div class="social-icons  d-flex" style="margin-left: 100px;">
-                        <a href="https://www.facebook.com/share/1BqoepiZRp/" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="https://t.me/DreamMoreCompany-----Telegram" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
-                        <a href="https://www.tiktok.com/@dreammorecompany" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                        <a href="https://www.instagram.com/dreammorecompany/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <!-- Newsletter -->
+                    <div class="newsletter">
+                        <h6>Stay Updated</h6>
+                        <form class="newsletter-form">
+                            <input type="email" placeholder="Your email address" required>
+                            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                        </form>
                     </div>
                 </div>
 
-                <!-- Quick Links -->
-                <!-- <div class="col-lg-3 col-md-6 footer-col">
-                    <h6>Quick Links</h6>
-                    <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#services">Services</a></li>
-                        <li><a href="#courses">Courses</a></li>
-                        <li><a href="#portfolio">Portfolio</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#team">Team</a></li>
-                        <li><a href="#testimonials">Testimonials</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div> -->
-
-                <!-- Services -->
-                <div class="col-lg-3 col-md-6 footer-col servicefooter" style="margin-left: 220px;">
+                <!-- Services - Second Column -->
+                <div class="col-lg-2 col-md-6 footer-col">
                     <h6>Services</h6>
                     <ul>
                         <li><a href="#">Social Media Marketing</a></li>
@@ -254,15 +425,51 @@
                     </ul>
                 </div>
 
-                <!-- Contact Info -->
-                <div class="col-lg-3 col-md-6 footer-col">
-                    <h6>Contact Us</h6>
+                <!-- Quick Links - Third Column -->
+                <div class="col-lg-2 col-md-6 footer-col">
+                    <h6>Quick Links</h6>
                     <ul>
-                        <li><i class="fas fa-map-marker-alt me-2"></i>Bahirdar, Ethiopia</li>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our Team</a></li>
+                        <li><a href="#">Testimonials</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info - Fourth Column -->
+                <div class="col-lg-4 col-md-6 footer-col">
+                    <h6>Contact Us</h6>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt me-2"></i> Bahirdar, Ethiopia</li>
                         <li><i class="fas fa-phone me-2"></i> +251 912 345 678</li>
                         <li><i class="fas fa-envelope me-2"></i> info@dreammore.com</li>
                         <li><i class="fas fa-clock me-2"></i> Mon-Fri: 9AM - 6PM</li>
+                        <li><i class="fas fa-globe me-2"></i> www.dreammore.com</li>
                     </ul>
+                    
+                    <!-- Social Icons - Moved here to prevent overlap -->
+                    <div class="social-icons mt-4">
+                        <a href="https://www.facebook.com/share/1BqoepiZRp/" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://t.me/DreamMoreCompany-----Telegram" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+                        <a href="https://www.tiktok.com/@dreammorecompany" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.instagram.com/dreammorecompany/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    
+                    <!-- Payment Methods -->
+                    <div class="payment-methods mt-3">
+                        <h6>We Accept</h6>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <img src="https://via.placeholder.com/40/ffffff/111827?text=VC" alt="Visa" width="40" class="rounded">
+                            <img src="https://via.placeholder.com/40/ffffff/111827?text=MC" alt="Mastercard" width="40" class="rounded">
+                            <img src="https://via.placeholder.com/40/ffffff/111827?text=PP" alt="PayPal" width="40" class="rounded">
+                            <img src="https://via.placeholder.com/40/ffffff/111827?text=BT" alt="Bank Transfer" width="40" class="rounded">
+                        </div>
+                    </div>
                 </div>
             </div>
 

@@ -10,6 +10,13 @@ body {
   padding: 0;
 }
 
+#applybtn,#getstartedbtn{
+  background-color: #ff7800;
+  
+  color: white;
+  font-weight: 200;
+}
+
 /* ===== Rocket Animation Overlay ===== */
 #rocketOverlay {
   position: fixed;
@@ -75,7 +82,8 @@ body {
 }
 
 #navbarNav ul {
-  gap: 1.25rem;
+
+  gap: 1.1rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -83,7 +91,7 @@ body {
   color: #ffffff !important;
   font-weight: 500;
   padding: 0.5rem 1rem;
-  font-size: 1rem;
+  font-size: 0.8rem;
   transition: color 0.3s ease;
 }
 
@@ -127,7 +135,7 @@ section {
 #home {
   background: linear-gradient(135deg, #1a1a1a 0%, #2c3e50 100%);
   color: white;
-  background-image: url('/Uploads/home3.png');
+  background-image: url('/Uploads/HOME2.png');
   background-size: cover;
   background-position: center;
   position: relative;
@@ -157,9 +165,7 @@ section {
 }
 
 /* ===== Services Section ===== */
-#services {
-  background-color: #f8f9fa;
-}
+
 
 /* ===== Courses Section ===== */
 #courses {

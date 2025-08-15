@@ -11,7 +11,7 @@
   <style>
     /* Responsive Hero Section */
     .hero-part {
-      background-image: url('/Uploads/home3.png');
+      background-image: url('/HOME2.png');
       background-size: cover;
       background-position: center;
       min-height: 100vh;
@@ -33,10 +33,14 @@
       justify-content: center;
       flex-wrap: wrap;
       gap: 1rem;
-      margin-top: 2rem;
+   
+      position: relative;
+     padding: 80px 20px;
+   
     }
     
     .auth-btn {
+     
       width: 160px;
       height: 60px;
       border-radius: 20px !important;
@@ -120,13 +124,16 @@
       <% } %>
       
       <!-- Responsive Spacing - Replaced fixed breaks with proper padding -->
-      <div class="py-5 py-md-5 py-lg-5"></div>
+      <div class="py-5 py-md-5 py-lg-5">
+        
+      </div>
       
       <!-- Auth Buttons - Made Responsive -->
+       
       <div class="auth-buttons">
-        <button class="btn btn-success auth-btn" data-bs-toggle="modal" data-bs-target="#signInModal" style="background-color: #ff7800;">Sign In</button>
-        <button class="btn btn-outline-light auth-btn" data-bs-toggle="modal" data-bs-target="#signUpModal" style="background-color: #010318;">Sign Up</button>
-        <a href="#contact" class="btn btn-primary btn-lg mt-3 btget">Get Started</a>
+        <!-- <button class="btn btn-success auth-btn" data-bs-toggle="modal" data-bs-target="#signInModal" style="background-color: #ff7800;padding: 0;">Sign In</button> -->
+        <!-- <button class="btn btn-outline-light auth-btn" data-bs-toggle="modal" data-bs-target="#signUpModal" style="background-color: #010318;">Sign Up</button>
+        <a href="#contact" class="btn btn-primary btn-lg mt-3 btget">Get Started</a> -->
       </div>
     </div>
   </section>
@@ -171,11 +178,11 @@
             </div>
             <div class="mt-3">
               <span>Already have an account? </span>
-              <button type="button" class="btn btn-link p-0" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#signInModal">Sign In</button>
+              <button type="button"  id="applybtn" class="btn btn-link p-0" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#signInModal">Sign In</button>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-success w-100">Sign Up</button>
+            <button type="submit"  id="applybtn" class="btn w-100">Sign Up</button>
           </div>
         </form>
       </div>
@@ -205,11 +212,11 @@
             </div>
             <div class="mt-3">
               <span>Don't have an account? </span>
-              <button type="button" class="btn btn-link p-0" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign Up</button>
+              <button type="button"  id="applybtn" class="btn btn-link p-0" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign Up</button>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="submit" id="getstartedbtn" class="btn btn-primary w-100">Sign In</button>
+            <button type="submit" id="getstartedbtn" class="btn w-100">Sign In</button>
           </div>
         </form>
       </div>
