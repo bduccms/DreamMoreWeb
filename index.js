@@ -36,14 +36,17 @@ app.use((req, res, next) => {
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+// ✅ Fix for case-sensitive uploads folder
+app.use('/Uploads', express.static(path.join(__dirname, 'public/Uploads')));
+
 // Set EJS as view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Multer config for file uploads
+// Multer config for file uploads (with correct folder case)
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'public/uploads/');
+        cb(null, path.join(__dirname, 'public/Uploads')); // ✅ capital U
     },
     filename: (req, file, cb) => {
         cb(null, Date.now() + '-' + file.originalname);
@@ -60,7 +63,7 @@ app.use('/admin/workers', workerRoutes); // ✅ mount worker routes here
 app.use('/', testimonialRoutes);
 app.use('/', portfolioRoutes);
 
-app.use('/uploads', express.static('public/uploads')); // Serve uploaded files
+app.use('/uploads', express.static(path.join(__dirname, 'public/Uploads'))); // ✅ serve uploaded files with correct case
 
 // ✅ Home route fetching testimonials and courses
 app.get('/', async (req, res) => {

@@ -9,8 +9,8 @@ exports.getPortfolios = async (req, res) => {
 
     // Ensure image paths have correct prefix for production
     const updatedPortfolios = portfolios.map(p => {
-      if (p.image && !p.image.startsWith('/uploads/')) {
-        p.image = `/uploads/${p.image}`;
+      if (p.image && !p.image.startsWith('/Uploads/')) {
+        p.image = `/Uploads/${p.image}`;
       }
       return p;
     });
@@ -51,8 +51,8 @@ exports.showAddForm = (req, res) => {
 exports.addPortfolio = async (req, res) => {
   const { title, description, category, drive_url, github_url } = req.body;
 
-  // Always store image path relative to /uploads
-  const image = req.file ? `/uploads/${req.file.filename}` : null;
+  // Always store image path relative to /Uploads
+  const image = req.file ? `/Uploads/${req.file.filename}` : null;
 
   try {
     await db.query(
@@ -92,7 +92,7 @@ exports.editPortfolio = async (req, res) => {
   const { title, description, category, drive_url, github_url, currentImage } = req.body;
 
   // Use uploaded file if provided, otherwise keep current image
-  const image = req.file ? `/uploads/${req.file.filename}` : currentImage;
+  const image = req.file ? `/Uploads/${req.file.filename}` : currentImage;
 
   try {
     await db.query(
