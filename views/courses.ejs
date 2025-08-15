@@ -1,4 +1,4 @@
-<section id="courses" class="py-5">
+<section id="courses" class="py-5" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);">
   <div class="container">
     <h1 class="section-title text-center mb-5" style="color: #ffffff;">Training Courses</h1>
 
@@ -11,34 +11,43 @@
         <div class="row mb-4">
           <% courses.slice(i, i + 2).forEach(course => { %>
             <div class="col-md-6 mb-6 d-flex">
-              <div class="card h-100 flex-fill shadow-sm">
+              <div class="card h-100 flex-fill shadow-sm" style="border-radius: 10px; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; background: linear-gradient(to bottom, #2c3e50, #1a1a2e);">
                 <img src="/Uploads/<%= course.photo || 'default.jpg' %>" alt="<%= course.title %>" class="card-img-top" style="height: 400px; object-fit: cover;">
                 <div class="card-body d-flex flex-column">
-                  <h5 class="card-title text-white"><%= course.title %></h5>
+                  <h5 class="card-title text-white fs-5"><%= course.title %></h5>
                   <h6 class="text-muted fw-bold fs-5"><%= course.price %> ETB</h6>
-                  <p class="card-text" style="font-family: 'Times New Roman', Times, serif; font-size: 20px;"><%= course.description || 'Start your journey with our practical and professional training.' %></p>
+                  <p class="card-text text-light" style="font-family: 'Times New Roman', Times, serif; font-size: 15px;"><%= course.description || 'Start your journey with our practical and professional training.' %></p>
 
                   <div class="mt-auto">
-                   <%
-  let userApplication = null;
-  if (user && user.applications && Array.isArray(user.applications)) {
-    userApplication = user.applications.find(app => app.course_key.trim() === course.title.trim());
-  }
-%>
+                    <%
+                      let userApplication = null;
+                      if (user && user.applications && Array.isArray(user.applications)) {
+                        userApplication = user.applications.find(app => app.course_key.trim() === course.title.trim());
+                      }
+                    %>
 
-<% if (userApplication && userApplication.status === 'approved') { %>
-  <!-- ✅ Show Access button for approved users -->
-  <a href="/courses/<%= encodeURIComponent(course.title) %>" class="btn btn-success w-100">Access</a>
+                    <% if (userApplication && userApplication.status === 'approved') { %>
+                      <!-- ✅ Show Access button for approved users -->
+                      <a href="/courses/<%= encodeURIComponent(course.title) %>" class="btn btn-success w-100 py-2">
+                        <i class="fas fa-unlock-alt me-2"></i> Access
+                      </a>
 
-<% } else if (userApplication && userApplication.status === 'pending') { %>
-  <!-- ⏳ Show Pending button for pending applications -->
-  <button class="btn btn-warning w-100" disabled>Pending Approval</button>
+                    <% } else if (userApplication && userApplication.status === 'pending') { %>
+                      <!-- ⏳ Show Pending button for pending applications -->
+                      <button class="btn btn-warning w-100 py-2" disabled>
+                        <i class="fas fa-hourglass-half me-2"></i> Pending Approval
+                      </button>
 
-<% } else { %>
-  <!-- 📝 Show Apply button for new users -->
-  <button  id="applybtn" class="btn  w-25 apply-btn" data-bs-toggle="modal" data-bs-target="<%= user ? '#applyModal_' + course.title.replace(/\s+/g, '_') : '#signInModal' %>" data-course-title="<%= course.title %>"   >Apply Now</button>
-<% } %>
-
+                    <% } else { %>
+                      <!-- 📝 Show Apply button for new users -->
+                      <button id="applybtn" class="btn btn-primary py-2 apply-btn" 
+                              data-bs-toggle="modal" 
+                              data-bs-target="<%= user ? '#applyModal_' + course.title.replace(/\s+/g, '_') : '#signInModal' %>" 
+                              data-course-title="<%= course.title %>"
+                              style="min-width: 150px;">
+                        <i class="fas fa-paper-plane me-2"></i> Apply Now
+                      </button>
+                    <% } %>
                   </div>
                 </div>
               </div>
@@ -46,69 +55,113 @@
 
             <% if (user) { %>
               <!-- Full-Screen Apply Modal -->
-              <div class="modal fade " id="applyModal_<%= course.title.replace(/\s+/g, '_') %>" tabindex="-1" aria-labelledby="applyModalLabel_<%= course.title.replace(/\s+/g, '_') %>" aria-hidden="true" >
+              <div class="modal fade" id="applyModal_<%= course.title.replace(/\s+/g, '_') %>" tabindex="-1" aria-labelledby="applyModalLabel_<%= course.title.replace(/\s+/g, '_') %>" aria-hidden="true">
                 <div class="modal-dialog modal-fullscreen" role="document">
-                  <div class="modal-content">
-                    <div class="modal-head text-white p-5" style="background: linear-gradient(to right, #ff7800, #010318);">
-                      <h5 class="modal-title"  style="font-size: 50px;" id="applyModalLabel_<%= course.title.replace(/\s+/g, '_') %> "  >Apply for <%= course.title %></h5>
-                      <button type="button" class="p-3 btn-close"   style="background-color: white; color: red;" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <div class="modal-content" style="background: linear-gradient(to bottom, #1a1a2e, #16213e);">
+                    <div class="modal-header text-white p-1" style="background: linear-gradient(to right, #ff7800, #010318);">
+                      <h5 class="modal-title" style="font-size: 30px;" id="applyModalLabel_<%= course.title.replace(/\s+/g, '_') %>">
+                        <i class="fas fa-graduation-cap me-3"></i>Apply for <%= course.title %>
+                      </h5>
+                      <button type="button" class="p-3 btn-close" style="background-color: white; color: red;" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                       <div class="container">
 
                         <!-- Step 1: Welcome & Confirm Payment -->
                         <section id="applyContent_<%= course.title.replace(/\s+/g, '_') %>" aria-live="polite">
-                          <div class="text-center mb-4">
+                          <div class="text-center mb-4 text-white">
                             <h4>Welcome to <strong><%= course.title %></strong> Training!</h4>
                             <p class="lead">Join our professional course and unlock your potential.</p>
-                            <ul class="list-group list-group-flush mx-auto" style="max-width: 600px;">
-                              <li class="list-group-item">Learn from expert instructors</li>
-                              <li class="list-group-item">Lifetime access to course materials</li>
-                              <li class="list-group-item">Earn a certification upon completion</li>
+                            <ul class="list-group list-group-flush mx-auto" style="max-width: 600px; background: rgba(255,255,255,0.1);">
+                              <li class="list-group-item text-white" style="background: transparent;">Learn from expert instructors</li>
+                              <li class="list-group-item text-white" style="background: transparent;">Lifetime access to course materials</li>
+                              <li class="list-group-item text-white" style="background: transparent;">Earn a certification upon completion</li>
                             </ul>
-                            <button type="button" class="btn btn-primary mt-4 confirm-payment-btn" aria-describedby="paymentInstructions_<%= course.title.replace(/\s+/g, '_') %>" data-course-title="<%= course.title.replace(/\s+/g, '_') %>">Confirm Payment</button>
+                            <button  type="button"   style="background-color: #ff7800; color: #ffffff;"   class="btn  mt-4 confirm-payment-btn py-3 px-5" 
+                                    aria-describedby="paymentInstructions_<%= course.title.replace(/\s+/g, '_') %>" 
+                                    data-course-title="<%= course.title.replace(/\s+/g, '_') %>"
+                                    style="font-size: 1.2rem;">
+                              <i class="fas fa-arrow-right me-2"></i> Confirm Payment
+                            </button>
                           </div>
                         </section>
 
                         <!-- Step 2: Payment Instructions and Upload -->
                         <section id="paymentSteps_<%= course.title.replace(/\s+/g, '_') %>" class="d-none" role="region" aria-live="polite" aria-labelledby="paymentInstructionsLabel_<%= course.title.replace(/\s+/g, '_') %>">
-                          <div class="d-flex ">
-                          <label for=""  class="mt-5 pt-1 h-25 border-5 border border-success border-rounded" style="font-size: 60px;border-radius: 50%;">🥇</label>
-                          <div class="border w-50 mx-auto p-3 border-primary border-3 fw-5 fs-5 my-3">
-                           
-                          <h5  id="paymentInstructionsLabel_<%= course.title.replace(/\s+/g, '_') %>">Step 1️⃣: Payment Instructions</h5>
-                          <p>Please send your payment for <strong><%= course.title %></strong> using one of the following methods:</p>
+                          <div class="d-flex">
+                            <div class="step-icon me-4 mt-5">
+                              <span class="badge bg-primary rounded-circle p-3" style="font-size: 1.5rem;">1</span>
+                            </div>
+                            <div class="border w-50 mx-auto p-3 border-primary border-3 fw-5 fs-5 my-3 text-white">
+                              <h5 id="paymentInstructionsLabel_<%= course.title.replace(/\s+/g, '_') %>">
+                                <i class="fas fa-money-bill-wave me-2"></i>Payment Instructions
+                              </h5>
+                              <p>Please send your payment for <strong><%= course.title %></strong> using one of the following methods:</p>
+                            </div>
                           </div>
-                          </div>
-                          <ul class=" mb-4 d-flex  w-100" style="max-width: 700px;background-color: #010318;margin-left: 28%;">
-                            <li class="list-group-item text-white p-3" style="background-color: #010318; font-size: 40px;"><strong>Telebirr</strong>: Send to <code  class="p-3 border-pill">+251978466718</code></li>
-                            <li class="list-group-item" style="background-color: #ff7800;color: white; font-size: 40px;"><strong>CBE Birr</strong>: Send to <code class="p-3 border-pill"  ;>1000221667429</code></li>
+                          
+                          <ul class="mb-4 d-flex w-100" style="max-width: 700px; margin-left: 28%;">
+                            <li class="list-group-item text-white p-3" style="background-color: #010318; font-size: 20px;">
+                              <i class="fas fa-mobile-alt me-2"></i><strong>Telebirr</strong>: 
+                              <div class="input-group mt-2">
+                                <input type="text" class="form-control bg-dark text-white" value="+251978466718" readonly>
+                                <button class="btn btn-outline-light copy-btn" type="button">
+                                  <i class="fas fa-copy"></i>
+                                </button>
+                              </div>
+                            </li>
+                            <li class="list-group-item p-3" style="background-color: #ff7800; color: white; font-size: 20px;">
+                              <i class="fas fa-university me-2"></i><strong>CBE Birr</strong>:
+                              <div class="input-group mt-2">
+                                <input type="text" class="form-control bg-white" value="1000221667429" readonly>
+                                <button class="btn btn-outline-dark copy-btn" type="button">
+                                  <i class="fas fa-copy"></i>
+                                </button>
+                              </div>
+                            </li>
                           </ul>
 
                           <div class="d-flex">
-                            <label for="" class="mt-5 pt-1 h-25 border-5 border border-success border-rounded"  style="font-size: 60px; border-radius: 50%;">🥈</label>
-
-                          <div class="border w-50 mx-auto p-3 border-primary border-3 fw-5 fs-5">
-
-                          <h5>Step 2️⃣: Upload Payment Screenshot</h5>
-                          <form id="applyForm_<%= course.title.replace(/\s+/g, '_') %>" action="/courses/apply" method="POST" enctype="multipart/form-data" novalidate>
-                            <input type="hidden" style="border: solid 30px #010318;"  name="courseKey" value="<%= course.title %>" >
-                            <input type="hidden" name="userId" value="<%= user.id %>">
-                            <div class="mb-3" style="max-width: 400px;">
-                              <label for="screenshot_<%= course.title.replace(/\s+/g, '_') %>" class="form-label">Upload Payment Screenshot <span class="text-danger">*</span></label>
-                              <input type="file" class="form-control" id="screenshot_<%= course.title.replace(/\s+/g, '_') %>" name="screenshot" accept="image/*" required aria-required="true">
+                            <div class="step-icon me-4 mt-5">
+                              <span class="badge bg-primary rounded-circle p-3" style="font-size: 1.5rem;">2</span>
                             </div>
-                            <p class="text-danger "  style="font-size: 20px; font-family: 800px; ">Keep your payment proof. Contact support if access isn’t granted within 24 hours.</p>
-                            <button type="submit" class="btn btn-success submit-btn">Submit Application</button>
-                          </form>
+                            <div class="border w-50 mx-auto p-3 border-primary border-3 fw-5 fs-5 text-white">
+                              <h5>
+                                <i class="fas fa-upload me-2"></i>Upload Payment Screenshot
+                              </h5>
+                              <form id="applyForm_<%= course.title.replace(/\s+/g, '_') %>" action="/courses/apply" method="POST" enctype="multipart/form-data" novalidate>
+                                <input type="hidden" name="courseKey" value="<%= course.title %>">
+                                <input type="hidden" name="userId" value="<%= user.id %>">
+                                <div class="mb-3" style="max-width: 400px;">
+                                  <label for="screenshot_<%= course.title.replace(/\s+/g, '_') %>" class="form-label text-white">
+                                    Payment Screenshot <span class="text-danger">*</span>
+                                  </label>
+                                  <input type="file" class="form-control bg-dark text-white" id="screenshot_<%= course.title.replace(/\s+/g, '_') %>" name="screenshot" accept="image/*" required aria-required="true">
+                                  <div class="preview-container mt-2 d-none">
+                                    <img id="preview_<%= course.title.replace(/\s+/g, '_') %>" src="#" alt="Preview" class="img-thumbnail" style="max-height: 200px;">
+                                  </div>
+                                </div>
+                                <p class="text-warning" style="font-size: 20px; font-family: 'Times New Roman', Times, serif;">
+                                  <i class="fas fa-exclamation-circle me-2"></i>Keep your payment proof. Contact support if access isn't granted within 24 hours.
+                                </p>
+                                <button type="submit" class="btn btn-success submit-btn py-2 px-4">
+                                  <i class="fas fa-paper-plane me-2"></i> Submit Application
+                                </button>
+                              </form>
+                            </div>
                           </div>
-
-                          </div>
-                          <div id="thankYou_<%= course.title.replace(/\s+/g, '_') %>" class="d-none mt-4 text-center bg-success text-white" tabindex="0" aria-live="assertive">
-                            <h4>Thank You!</h4>
-                            <p style="font-family: 'Times New Roman', Times, serif; font-size: 20px; font-weight: 800;">Your application for <strong><%= course.title %></strong> has been submitted successfully.</p>
-                            <p class="text-white" style="font-family: 'Times New Roman', Times, serif; font-size: 20px; font-weight: 800;">We’ll review your payment and grant access within 24 hours.</p>
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                          
+                          <div id="thankYou_<%= course.title.replace(/\s+/g, '_') %>" class="d-none mt-4 text-center bg-success text-white p-4 rounded" tabindex="0" aria-live="assertive">
+                            <h4><i class="fas fa-check-circle me-2"></i>Thank You!</h4>
+                            <p style="font-family: 'Times New Roman', Times, serif; font-size: 20px; font-weight: 800;">
+                              Your application for <strong><%= course.title %></strong> has been submitted successfully.
+                            </p>
+                            <p class="text-white" style="font-family: 'Times New Roman', Times, serif; font-size: 20px; font-weight: 800;">
+                              We'll review your payment and grant access within 24 hours.
+                            </p>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                              <i class="fas fa-check me-2"></i> Close
+                            </button>
                           </div>
                         </section>
                       </div>
@@ -126,190 +179,148 @@
   </div>
 </section>
 
-<!-- Bootstrap CSS (already included in home.ejs, here for standalone testing) -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<!-- Bootstrap Stepper CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper@1.7.0/dist/css/bs-stepper.min.css" integrity="sha256-4b5W1u+UdJ6b1mYgOHbGU9D4A4ZJ98m2+2G2UznK3n4=" crossorigin="anonymous">
-<!-- Bootstrap JS and Stepper JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bs-stepper@1.7.0/dist/js/bs-stepper.min.js" integrity="sha256-H+SSwFRvS5Yp0uK46a+67dSFH0uP/7oB5Wi8E1Ez1tc=" crossorigin="anonymous"></script>
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 <style>
-  .bs-stepper-content .content {
-    display: none;
+  /* Card hover effect */
+  .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
-  .bs-stepper-content .content.active {
-    display: block;
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
   }
-  .form-control {
-    max-width: 500px;
-    margin: 0 auto;
+  
+  /* Modal improvements */
+  .modal-content {
+    border-radius: 0;
+  }
+  
+  /* Step indicator */
+  .step-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+  }
+  
+  /* File upload preview */
+  .preview-container img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Copy button animation */
+  .copy-btn {
+    transition: all 0.3s ease;
+  }
+  
+  .copy-btn:hover {
+    transform: scale(1.1);
+  }
+  
+  /* Apply button */
+  .apply-btn {
+    transition: all 0.3s ease;
+  }
+  
+  .apply-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   }
 </style>
+
 <script>
-  try {
-    document.addEventListener('DOMContentLoaded', () => {
-      console.log('DEBUG: DOMContentLoaded fired');
-      
-      // Check if Stepper is available
-      if (typeof Stepper === 'undefined') {
-        console.error('ERROR: Stepper library not loaded');
-        return;
-      }
-
-      // Initialize steppers for each modal
-      const steppers = document.querySelectorAll('.bs-stepper');
-      console.log('DEBUG: Found steppers:', steppers.length);
-      steppers.forEach(stepperEl => {
-        try {
-          const stepper = new Stepper(stepperEl, {
-            linear: true,
-            animation: true
-          });
-          stepperEl.stepperInstance = stepper;
-          console.log('DEBUG: Initialized stepper for', stepperEl.id);
-        } catch (err) {
-          console.error('ERROR: Failed to initialize stepper for', stepperEl.id, err);
-        }
-      });
-
-      // Handle Confirm Payment button
-      const confirmButtons = document.querySelectorAll('.confirm-payment-btn');
-      console.log('DEBUG: Found confirm-payment-btn:', confirmButtons.length);
-      confirmButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const courseTitle = btn.dataset.courseTitle;
-          console.log('DEBUG: Confirm payment clicked for course:', courseTitle);
-          const applyContent = document.getElementById(`applyContent_${courseTitle}`);
-          const paymentSteps = document.getElementById(`paymentSteps_${courseTitle}`);
-          if (applyContent && paymentSteps) {
-            applyContent.classList.add('d-none');
-            paymentSteps.classList.remove('d-none');
-          } else {
-            console.error('ERROR: Could not find applyContent or paymentSteps for course:', courseTitle);
-          }
-        });
-      });
-
-      // Handle Next button in stepper
-      const nextButtons = document.querySelectorAll('.next-step-btn');
-      console.log('DEBUG: Found next-step-btn:', nextButtons.length);
-      nextButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const stepperId = btn.dataset.stepperId;
-          console.log('DEBUG: Next step clicked for stepper:', stepperId);
-          const stepperEl = document.getElementById(stepperId);
-          if (stepperEl && stepperEl.stepperInstance) {
-            stepperEl.stepperInstance.next();
-          } else {
-            console.error('ERROR: Stepper not found or not initialized for:', stepperId);
-          }
-        });
-      });
-
-      // Handle form submission
-      const submitButtons = document.querySelectorAll('.submit-btn');
-      console.log('DEBUG: Found submit-btn:', submitButtons.length);
-      submitButtons.forEach(btn => {
-        const form = btn.closest('form');
-        if (!form) {
-          console.error('ERROR: Form not found for submit button');
-          return;
-        }
-        form.addEventListener('submit', async (e) => {
-          e.preventDefault();
-          const courseTitle = form.id.replace('applyForm_', '');
-          console.log('DEBUG: Form submission started for course:', courseTitle);
-          const formData = new FormData(form);
-          btn.disabled = true;
-          btn.textContent = 'Submitting...';
-
-          try {
-            const response = await fetch('/courses/apply', {
-              method: 'POST',
-              body: formData
-            });
-            const result = await response.json();
-            if (response.ok) {
-              console.log('DEBUG: Application submitted successfully for course:', courseTitle);
-              form.classList.add('d-none');
-              const thankYou = document.getElementById(`thankYou_${courseTitle}`);
-              if (thankYou) {
-                thankYou.classList.remove('d-none');
-              } else {
-                console.error('ERROR: Thank you element not found for course:', courseTitle);
-              }
-            } else {
-              throw new Error(result.error || 'Submission failed');
-            }
-          } catch (err) {
-            console.error('ERROR: Failed to submit application for course:', courseTitle, err);
-            alert('Failed to submit application: ' + err.message);
-            btn.disabled = false;
-            btn.textContent = 'Submit Application';
-          }
-        });
-      });
-    });
-  } catch (err) {
-    console.error('ERROR: Script error in courses.ejs:', err);
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-  // Handle Confirm Payment button click
-  document.querySelectorAll('.confirm-payment-btn').forEach(button => {
-    button.addEventListener('click', () => {
-      const courseTitle = button.dataset.courseTitle;
+document.addEventListener('DOMContentLoaded', () => {
+  // Original functionality for showing payment steps
+  document.querySelectorAll('.confirm-payment-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const courseTitle = btn.dataset.courseTitle;
       const applyContent = document.getElementById(`applyContent_${courseTitle}`);
       const paymentSteps = document.getElementById(`paymentSteps_${courseTitle}`);
-
       if (applyContent && paymentSteps) {
-        // Hide welcome content, show payment steps
         applyContent.classList.add('d-none');
         paymentSteps.classList.remove('d-none');
-
-        // Move keyboard focus to the payment instructions heading for accessibility
-        const paymentHeading = paymentSteps.querySelector('h5');
-        if (paymentHeading) paymentHeading.focus();
+        // Focus on the first input for accessibility
+        const firstInput = paymentSteps.querySelector('input');
+        if (firstInput) firstInput.focus();
       }
     });
   });
 
-  // Form submission handler (optional enhancement)
-  document.querySelectorAll('.submit-btn').forEach(button => {
-    const form = button.closest('form');
-    if (!form) return;
-    
-    form.addEventListener('submit', async (e) => {
+  // File preview functionality
+  document.querySelectorAll('input[type="file"]').forEach(input => {
+    input.addEventListener('change', function() {
+      const previewId = this.id.replace('screenshot_', 'preview_');
+      const preview = document.getElementById(previewId);
+      const previewContainer = this.nextElementSibling;
+      
+      if (this.files && this.files[0]) {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+          preview.src = e.target.result;
+          previewContainer.classList.remove('d-none');
+        }
+        
+        reader.readAsDataURL(this.files[0]);
+      }
+    });
+  });
+
+  // Copy button functionality
+  document.querySelectorAll('.copy-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      const input = this.closest('.input-group').querySelector('input');
+      input.select();
+      document.execCommand('copy');
+      
+      // Show feedback
+      const originalText = this.innerHTML;
+      this.innerHTML = '<i class="fas fa-check me-1"></i> Copied!';
+      setTimeout(() => {
+        this.innerHTML = originalText;
+      }, 2000);
+    });
+  });
+
+  // Form submission handling
+  document.querySelectorAll('form[id^="applyForm_"]').forEach(form => {
+    form.addEventListener('submit', async function(e) {
       e.preventDefault();
-
-      button.disabled = true;
-      button.textContent = 'Submitting...';
-
-      const formData = new FormData(form);
-
+      const submitBtn = this.querySelector('.submit-btn');
+      const courseTitle = form.id.replace('applyForm_', '');
+      
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Processing...';
+      
       try {
-        const response = await fetch(form.action, {
+        const formData = new FormData(this);
+        const response = await fetch('/courses/apply', {
           method: 'POST',
-          body: formData,
+          body: formData
         });
-
-        if (!response.ok) throw new Error('Submission failed');
-
+        
+        if (!response.ok) {
+          throw new Error('Submission failed');
+        }
+        
         // Show thank you message
         form.classList.add('d-none');
-        const courseTitle = form.id.replace('applyForm_', '');
         const thankYou = document.getElementById(`thankYou_${courseTitle}`);
         if (thankYou) {
           thankYou.classList.remove('d-none');
-          thankYou.focus();
+          thankYou.focus(); // Move focus for accessibility
         }
       } catch (err) {
         alert('Failed to submit application: ' + err.message);
-        button.disabled = false;
-        button.textContent = 'Submit Application';
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i> Submit Application';
       }
     });
   });
 });
-
 </script>

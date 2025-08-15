@@ -1,42 +1,218 @@
-  <!-- About Us Section -->
-<section id="about">
+<!-- About Us Section -->
+<section id="about" class="py-5" style="background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);">
   <div class="container">
-    <h2 class="section-title">About Us</h2>
+    <div class="text-center mb-5">
+      <h2 class="section-title display-4 fw-bold mb-3" style="color: #010318;">About Dreammore</h2>
+      <div class="divider mx-auto" style="width: 100px; height: 4px; background: linear-gradient(to right, #ff7800, #ff4d00);"></div>
+    </div>
 
-    <p class="lead fw-bold" style="font-size: 20px; " >
-      <strong>Dreammore</strong> is a youth-led company based in Bahir Dar, Ethiopia, founded by <br>passionate university students. We excel in video editing, graphic design, web/app <br>development, digital marketing, and training programs to empower the next generation.
-    </p>
-
-    <!-- Video -->
-    <video width="100%" height="auto" controls style="max-width: 850px; border-radius: 10px; margin: 20px 0;">
-      <source src="aboutv.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
-
-    <p style="font-size: 20px; " class="fw-bold">
-      Our mission is to provide professional services and training that equip young people with <br>the skills they need to succeed in today's digital world. We believe in the power of <br>creativity and technology to transform lives and communities.
-    </p>
-    <p style="font-size: 20px; " class="fw-bold">
-      At Dreammore, we are committed to excellence, innovation, and social impact. <br>
-       Our team of skilled professionals works tirelessly to deliver high-quality <br>
-        services that meet the unique needs of our clients.
-    </p>
+    <div class="row align-items-center mb-5">
+      <div class="col-lg-6">
+        <p class="lead fs-4 mb-4" style="line-height: 1.6;color: #010318;">
+          <span class=" fw-bold">Dreammore</span> is a youth-led company based in Bahir Dar, Ethiopia, founded by passionate university students. We excel in video editing, graphic design, web/app development, digital marketing, and training programs to empower the next generation.
+        </p>
+        
+        <p class="fs-5 mb-4" style="line-height: 1.6; color: #010318;">
+          Our mission is to provide professional services and training that equip young people with the skills they need to succeed in today's digital world. We believe in the power of creativity and technology to transform lives and communities.
+        </p>
+        
+        <p class="fs-5 mb-4" style="line-height: 1.6; color: #010318;">
+          At Dreammore, we are committed to excellence, innovation, and social impact. Our team of skilled professionals works tirelessly to deliver high-quality services that meet the unique needs of our clients.
+        </p>
+      </div>
+      
+      <div class="col-lg-6">
+        <!-- Video with play button overlay -->
+        <div class="video-container position-relative rounded-3 overflow-hidden shadow-lg" style="max-width: 850px;">
+          <video width="100%" height="auto" controls poster="video-poster.jpg" class="w-100">
+            <source src="aboutv.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <div class="video-overlay d-flex align-items-center justify-content-center">
+            <div class="play-button rounded-circle bg-primary d-flex align-items-center justify-content-center">
+              <i class="fas fa-play text-white"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Message from CEO -->
-    <div class="msgowner">
-      <div style="flex: 1; text-align: left;">
-        <h3 style="margin-bottom: 10px;">Message from the Founder</h3>
-        <p style="font-size: 20px; " class="fw-bold">
-          Welcome to Dreammore! As a team of young innovators, 
-           we are dedicated to making a difference in our community
-            through creativity and technology. 
-            Join us on this exciting journey!
-        </p>
-        <p style="margin-top: 10px;"><strong>- Abebe Eyayu</strong></p>
+    <div class="row justify-content-center mt-5">
+      <div class="col-lg-10">
+        <div class="ceo-card p-4 p-md-5 rounded-4 shadow-sm" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); border-left: 5px solid #ff7800;">
+          <div class="row align-items-center">
+            <div class="col-md-8">
+              <h3 class="fw-bold mb-4" style="color: #010318;">Message from the Founder</h3>
+              <blockquote class="fs-5 mb-4" style="line-height: 1.6; font-style: italic; color: #010318;">
+                "Welcome to Dreammore! As a team of young innovators, we are dedicated to making a difference in our community through creativity and technology. Join us on this exciting journey!"
+              </blockquote>
+              <div class="d-flex align-items-center">
+                <div class="border-start border-3 border-primary ps-3">
+                  <p class="mb-0 fw-bold fs-5">Abebe Eyayu</p>
+                  <p class="mb-0 text-muted">Founder & CEO</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 text-center mt-4 mt-md-0">
+              <img src="/Uploads/CEO.jpg" alt="CEO Profile" 
+                   class="img-fluid rounded-circle shadow" 
+                   style="width: 180px; height: 180px; object-fit: cover; border: 4px solid #ff7800;" />
+            </div>
+          </div>
+        </div>
       </div>
-      <div style="flex-shrink: 0; margin-left: 20px; display: flex; align-items: center;">
-        <img src="/Uploads/CEO.jpg" alt="CEO Profile" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;" />
+    </div>
+
+    <!-- Stats Section -->
+    <div class="row mt-5 g-4">
+      <div class="col-md-3 col-6">
+        <div class="stat-card text-center p-3 rounded-3 shadow-sm">
+          <h3 class="display-5 fw-bold" style="color: #ff7800;">5+</h3>
+          <p class="mb-0 fw-medium text-black">Years Experience</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-6">
+        <div class="stat-card text-center p-3 rounded-3 shadow-sm">
+          <h3 class="display-5 fw-bold" style="color: #ff7800;">50+</h3>
+          <p class="mb-0 fw-medium text-black">Projects Completed</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-6">
+        <div class="stat-card text-center p-3 rounded-3 shadow-sm">
+          <h3 class="display-5 fw-bold " style="color: #ff7800;">200+</h3>
+          <p class="mb-0 fw-medium text-black">Students Trained</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-6">
+        <div class="stat-card text-center p-3 rounded-3 shadow-sm">
+          <h3 class="display-5 fw-bold" style="color: #ff7800;">10+</h3>
+          <p class="mb-0 fw-medium text-black">Team Members</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+  /* Video container styling */
+  .video-container {
+    transition: transform 0.3s ease;
+  }
+  
+  .video-container:hover {
+    transform: translateY(-5px);
+  }
+  
+  .video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.2);
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+  
+  .video-overlay:hover {
+    opacity: 0;
+  }
+  
+  .play-button {
+    width: 70px;
+    height: 70px;
+    transition: transform 0.3s ease;
+  }
+  
+  .play-button i {
+    font-size: 1.5rem;
+    margin-left: 5px;
+  }
+  
+  .video-container:hover .play-button {
+    transform: scale(1.1);
+  }
+  
+  /* CEO card styling */
+  .ceo-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .ceo-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+  }
+  
+  /* Stat cards styling */
+  .stat-card {
+    background-color: white;
+    transition: transform 0.3s ease;
+  }
+  
+  .stat-card:hover {
+    transform: translateY(-5px);
+    background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .video-container {
+      margin-bottom: 2rem;
+    }
+    
+    .ceo-card {
+      text-align: center;
+    }
+    
+    .border-start {
+      border-left: none !important;
+      border-top: 3px solid #ff7800 !important;
+      padding-left: 0 !important;
+      padding-top: 1rem;
+      margin-top: 1rem;
+    }
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Video play button functionality
+  const videoContainers = document.querySelectorAll('.video-container');
+  
+  videoContainers.forEach(container => {
+    const video = container.querySelector('video');
+    const overlay = container.querySelector('.video-overlay');
+    
+    overlay.addEventListener('click', function() {
+      video.play();
+      overlay.style.opacity = '0';
+    });
+    
+    video.addEventListener('pause', function() {
+      overlay.style.opacity = '1';
+    });
+  });
+  
+  // Animation for stats
+  const statCards = document.querySelectorAll('.stat-card');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+  
+  statCards.forEach((card, index) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(20px)';
+    card.style.transition = `opacity 0.5s ease ${index * 0.1}s, transform 0.5s ease ${index * 0.1}s`;
+    observer.observe(card);
+  });
+});
+</script>

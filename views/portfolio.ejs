@@ -1,38 +1,179 @@
-<section id="portfolio" class="py-5" style="background-color: #010318;">
+<section id="portfolio" class="py-5" style="background: linear-gradient(135deg, #010318 0%, #0a0e2e 100%);">
     <div class="container">
-        <h2 class="section-title text-center mb-5" style="color: #ffffff;">Our Portfolio</h2>
+        <div class="text-center mb-5">
+            <h2 class="section-title display-4 fw-bold text-white mb-3">Our Portfolio</h2>
+            <p class="lead text-light opacity-75">Explore our creative work and technical projects</p>
+            <div class="divider mx-auto" style="width: 100px; height: 4px; background: linear-gradient(to right, #ff7800, #ff4d00);"></div>
+        </div>
         
         <% if (portfolios && portfolios.length > 0) { %>
             <% ['Video Production', 'Design Production', 'Software Development'].forEach(category => { %>
-                <h3 class="text-center text-white p-3  mb-4" style="background: linear-gradient(to right, #ff7800, #010318,#ffffff);
-">
-<%= category %></h3>
-                <div class="row">
-                    <% portfolios.filter(p => p.category === category).forEach(portfolio => { %>
-                        <div class="col-md-4 mb-4">
-                            <div class="card h-100 shadow-sm">
-                                <img src="<%= portfolio.image %>" class="card-img-top" alt="<%= portfolio.title %>" style="height: 200px; object-fit: cover;">
-                                <div class="card-body">
-                                    <h5 class="card-title text-white"><%= portfolio.title %></h5>
-                                    <p class="card-text"><%= portfolio.description %></p>
-                                    <% if (portfolio.drive_url) { %>
-                                        <a href="<%= portfolio.drive_url %>" target="_blank" class="btn btn-sm btn-outline-warning me-2 fs-3 text-white"  style="background: linear-gradient(to right, #010318);
-" ><i class="fab fa-google-drive"></i>
-</a>
-                                    <% } %>
-                                    <% if (portfolio.github_url) { %>
-                                        <a href="<%= portfolio.github_url %>" target="_blank" class="btn btn-sm btn-outline-secondary  fs-3 text-white" style="background: linear-gradient(to right, #ff7800);
-"><i class="fab fa-github"></i>
-</a>
-                                    <% } %>
+                <% const categoryPortfolios = portfolios.filter(p => p.category === category); %>
+                <% if (categoryPortfolios.length > 0) { %>
+                    <div class="category-section mb-5">
+                        <h3 class="category-title text-center text-white p-3 mb-4 rounded-3" 
+                            style="background: linear-gradient(90deg, #ff7800 0%, #010318 70%); 
+                                   border-left: 5px solid #ff7800;
+                                   position: relative;
+                                   overflow: hidden;">
+                            <span style="position: relative; z-index: 2;"><%= category %></span>
+                            <span class="category-icon" style="position: absolute; right: 20px; opacity: 0.2; z-index: 1;">
+                                <% if (category === 'Video Production') { %>
+                                    <i class="fas fa-video fa-2x"></i>
+                                <% } else if (category === 'Design Production') { %>
+                                    <i class="fas fa-paint-brush fa-2x"></i>
+                                <% } else { %>
+                                    <i class="fas fa-code fa-2x"></i>
+                                <% } %>
+                            </span>
+                        </h3>
+                        
+                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                            <% categoryPortfolios.forEach(portfolio => { %>
+                                <div class="col">
+                                    <div class="card h-100 border-0 shadow-lg portfolio-card" 
+                                         style="border-radius: 10px; overflow: hidden; 
+                                                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                                                background: rgba(255,255,255,0.05);">
+                                        <div class="portfolio-image-container" style="height: 220px; overflow: hidden;">
+                                            <img src="<%= portfolio.image %>" 
+                                                 class="card-img-top w-100 h-100 object-fit-cover" 
+                                                 alt="<%= portfolio.title %>"
+                                                 style="transition: transform 0.5s ease;">
+                                        </div>
+                                        <div class="card-body d-flex flex-column">
+                                            <h5 class="card-title text-white fw-bold"><%= portfolio.title %></h5>
+                                            <p class="card-text text-light opacity-75 flex-grow-1"><%= portfolio.description %></p>
+                                            
+                                            <div class="d-flex mt-3">
+                                                <% if (portfolio.drive_url) { %>
+                                                    <a href="<%= portfolio.drive_url %>" 
+                                                       target="_blank" 
+                                                       class="btn btn-sm me-2 portfolio-btn drive-btn"
+                                                       data-bs-toggle="tooltip" 
+                                                       data-bs-placement="top" 
+                                                       title="View on Google Drive">
+                                                        <i class="fab fa-google-drive fa-lg"></i>
+                                                    </a>
+                                                <% } %>
+                                                <% if (portfolio.github_url) { %>
+                                                    <a href="<%= portfolio.github_url %>" 
+                                                       target="_blank" 
+                                                       class="btn btn-sm portfolio-btn github-btn"
+                                                       data-bs-toggle="tooltip" 
+                                                       data-bs-placement="top" 
+                                                       title="View on GitHub">
+                                                        <i class="fab fa-github fa-lg"></i>
+                                                    </a>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            <% }) %>
                         </div>
-                    <% }) %>
-                </div>
+                    </div>
+                <% } %>
             <% }) %>
         <% } else { %>
-            <p class="text-center text-muted">No portfolios found.</p>
+            <div class="text-center py-5">
+                <img src="/assets/images/no-portfolio.svg" alt="No portfolios found" class="img-fluid mb-4" style="max-height: 200px;">
+                <h4 class="text-muted">No portfolios found</h4>
+                <p class="text-muted">Check back later for our latest work</p>
+            </div>
         <% } %>
     </div>
 </section>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    /* Portfolio card hover effect */
+    .portfolio-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .portfolio-card:hover .card-img-top {
+        transform: scale(1.05);
+    }
+    
+    /* Button styles */
+    .portfolio-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+    
+    .drive-btn {
+        background: linear-gradient(135deg, #4285F4 0%, #0F9D58 100%);
+        color: white;
+        border: none;
+    }
+    
+    .github-btn {
+        background: linear-gradient(135deg, #333 0%, #6e5494 100%);
+        color: white;
+        border: none;
+    }
+    
+    .portfolio-btn:hover {
+        transform: translateY(-3px) scale(1.1);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Category title animation */
+    .category-title {
+        transition: all 0.3s ease;
+    }
+    
+    .category-title:hover {
+        transform: translateX(5px);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .category-title {
+            font-size: 1.5rem;
+        }
+        
+        .portfolio-btn {
+            width: 36px;
+            height: 36px;
+            font-size: 0.9rem;
+        }
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize tooltips
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+    
+    // Add animation to portfolio cards when they come into view
+    const portfolioCards = document.querySelectorAll('.portfolio-card');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = 1;
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    portfolioCards.forEach((card, index) => {
+        card.style.opacity = 0;
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = `opacity 0.5s ease ${index * 0.1}s, transform 0.5s ease ${index * 0.1}s`;
+        observer.observe(card);
+    });
+});
+</script>
