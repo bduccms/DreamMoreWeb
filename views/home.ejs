@@ -139,7 +139,8 @@
   </section>
 
   <%- include('services.ejs') %>
-  <%- include('courses.ejs', { courses: courses, user: user }) %>
+ <%- include('courses.ejs', { courses: courses, user: user, error: null }) %>
+
   <%- include('portfolio.ejs', { portfolios: portfolios }) %>
   <%- include('about.ejs') %>
   <%- include('teams.ejs') %>
