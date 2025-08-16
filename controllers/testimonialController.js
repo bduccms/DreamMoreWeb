@@ -1,81 +1,77 @@
 const db = require('../config/db');
+const path = require('path');
+const fs = require('fs');
 
-// Fetch testimonials, courses, and portfolios for home page
+// -------------------- Public --------------------
 exports.getTestimonials = async (req, res) => {
   try {
     const [testimonials] = await db.query("SELECT * FROM testimonials ORDER BY id DESC");
-    const [courses] = await db.query("SELECT * FROM courseslist ORDER BY id DESC");
-    const [portfolios] = await db.query("SELECT * FROM portfolios ORDER BY created_at DESC");
+    
+    // Add photo path for public use
+    const formattedTestimonials = testimonials.map(testimonial => ({
+      ...testimonial,
+      photo: testimonial.photo ? testimonial.photo : null
+    }));
 
-    res.render("home", {
-      testimonials: testimonials || [],
-      courses: courses || [],
-      portfolios: portfolios || [],
-      user: req.session.user || null,
-      error: null
-    });
+    res.render('testimonials', { testimonials: formattedTestimonials });
   } catch (err) {
-    console.error('❌ Error fetching home page data:', err);
-    res.render("home", {
-      testimonials: [],
-      courses: [],
-      portfolios: [],
-      user: req.session.user || null,
-      error: "Failed to load home page data"
-    });
+    console.error('Error fetching testimonials:', err);
+    res.render('testimonials', { testimonials: [] });
   }
 };
 
-// Show Add/Edit Testimonial Form
-exports.showForm = async (req, res) => {
-  const { id } = req.params;
+// -------------------- Admin --------------------
 
+// Show add/edit form
+exports.showForm = async (req, res) => {
+  const id = req.params.id;
   if (id) {
-    // Editing: Fetch existing testimonial
+    // Editing
     try {
       const [rows] = await db.query("SELECT * FROM testimonials WHERE id = ?", [id]);
-      const testimonial = rows[0];
-      if (!testimonial) return res.status(404).send("Testimonial not found");
-      return res.render('admin/testimonial-form', { testimonial, user: req.session.user });
+      if (rows.length === 0) {
+        return res.redirect('/admin/testimonials');
+      }
+      res.render('add-testimonials', { testimonial: rows[0] });
     } catch (err) {
-      console.error("❌ Error fetching testimonial for edit:", err);
-      return res.status(500).send("Server Error");
+      console.error(err);
+      res.redirect('/admin/testimonials');
     }
   } else {
-    // Adding: Render empty form
-    res.render('admin/testimonial-form', { testimonial: null, user: req.session.user });
+    // Adding
+    res.render('add-testimonials', { testimonial: null });
   }
 };
 
-// Handle Add Testimonial POST
+// Handle add testimonial
 exports.addTestimonial = async (req, res) => {
-  const { name, description } = req.body;
-  const photo = req.file ? `/uploads/${req.file.filename}` : null;
-
   try {
+    const { name, description } = req.body;
+    const photo = req.file ? req.file.filename : null;
+
     await db.query(
       "INSERT INTO testimonials (name, description, photo) VALUES (?, ?, ?)",
       [name, description, photo]
     );
-    console.log("✅ Testimonial added successfully");
-    res.redirect('/testimonials');
+
+    res.redirect('/admin/testimonials');
   } catch (err) {
-    console.error("❌ Error adding testimonial:", err);
-    res.status(500).send("Server Error");
+    console.error(err);
+    res.redirect('/admin/testimonials');
   }
 };
 
-// Handle Edit Testimonial POST
+// Handle edit testimonial
 exports.editTestimonial = async (req, res) => {
-  const { id } = req.params;
-  const { name, description } = req.body;
-  let photo = req.file ? `/uploads/${req.file.filename}` : null;
-
   try {
+    const id = req.params.id;
+    const { name, description } = req.body;
+
+    // Get existing photo if not replaced
+    let photo = req.file ? req.file.filename : null;
     if (!photo) {
-      // Keep existing photo if no new one uploaded
       const [rows] = await db.query("SELECT photo FROM testimonials WHERE id = ?", [id]);
-      if (rows[0]) photo = rows[0].photo;
+      photo = rows.length > 0 ? rows[0].photo : null;
     }
 
     await db.query(
@@ -83,38 +79,42 @@ exports.editTestimonial = async (req, res) => {
       [name, description, photo, id]
     );
 
-    console.log(`✅ Testimonial with ID ${id} updated`);
-    res.redirect('/testimonials');
+    res.redirect('/admin/testimonials');
   } catch (err) {
-    console.error("❌ Error updating testimonial:", err);
-    res.status(500).send("Server Error");
+    console.error(err);
+    res.redirect('/admin/testimonials');
   }
 };
 
-// Handle Delete Testimonial
+// Delete testimonial
 exports.deleteTestimonial = async (req, res) => {
-  const { id } = req.params;
   try {
+    const id = req.params.id;
+
+    // Delete photo from server
+    const [rows] = await db.query("SELECT photo FROM testimonials WHERE id = ?", [id]);
+    if (rows.length > 0 && rows[0].photo) {
+      const photoPath = path.join(__dirname, '../public/uploads', rows[0].photo);
+      if (fs.existsSync(photoPath)) {
+        fs.unlinkSync(photoPath);
+      }
+    }
+
     await db.query("DELETE FROM testimonials WHERE id = ?", [id]);
-    console.log(`✅ Testimonial with ID ${id} deleted`);
-    res.redirect('/testimonials');
+    res.redirect('/admin/testimonials');
   } catch (err) {
-    console.error("❌ Error deleting testimonial:", err);
-    res.status(500).send("Server Error");
+    console.error(err);
+    res.redirect('/admin/testimonials');
   }
 };
 
-// Show Admin Testimonials List
+// Show all testimonials in admin panel
 exports.showAdminTestimonials = async (req, res) => {
   try {
     const [testimonials] = await db.query("SELECT * FROM testimonials ORDER BY id DESC");
-    res.render("admin/testimonials", {
-      testimonials,
-      user: req.session.user
-    });
+    res.render('admin-testimonials', { testimonials });
   } catch (err) {
-    console.error("❌ Error fetching testimonials:", err);
-    res.status(500).send("Server Error");
+    console.error(err);
+    res.render('admin-testimonials', { testimonials: [] });
   }
 };
-
